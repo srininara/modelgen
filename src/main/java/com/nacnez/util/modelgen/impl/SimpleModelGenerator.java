@@ -3,7 +3,7 @@ package com.nacnez.util.modelgen.impl;
 import java.util.Collection;
 import java.util.Map;
 
-import com.nacnez.util.modelgen.ModelContract;
+import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.ModelGenerator;
 
 public class SimpleModelGenerator implements ModelGenerator {
@@ -12,16 +12,21 @@ public class SimpleModelGenerator implements ModelGenerator {
 	
 	private Object prototypeModelObj;
 	
-	private ModelContract modelContract;
+	private GenerationContract contract;
 
 	public ModelGenerator make(long numberOfModelObjs) {
 		this.numberOfModelObjs = numberOfModelObjs;
 		return this;
 	}
 
-	public ModelGenerator ofThis(Object modelObj, ModelContract modelContract) {
+	public ModelGenerator instancesOf(Object modelObj) {
 		this.prototypeModelObj = modelObj;
-		this.modelContract = modelContract;
+//		this.modelContract = modelContract;
+		return this;
+	}
+	
+	public ModelGenerator with(GenerationContract contract) {
+		this.contract = contract;
 		return this;
 	}
 
