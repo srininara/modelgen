@@ -1,41 +1,51 @@
 package com.nacnez.util.modelgen.impl;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 
 import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.ModelGenerator;
 
-public class SimpleModelGenerator implements ModelGenerator {
+public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
 	private long numberOfModelObjs;
-	
-	private Object prototypeModelObj;
-	
+
+	private Class<T> prototypeModelType;
+
 	private GenerationContract contract;
 
-	public ModelGenerator make(long numberOfModelObjs) {
+	public ModelGenerator<T> make(long numberOfModelObjs) {
 		this.numberOfModelObjs = numberOfModelObjs;
 		return this;
 	}
 
-	public ModelGenerator instancesOf(Object modelObj) {
-		this.prototypeModelObj = modelObj;
-//		this.modelContract = modelContract;
+	public ModelGenerator<T> instancesOf(Class<T> c) {
+		this.prototypeModelType = c;
 		return this;
 	}
-	
-	public ModelGenerator with(GenerationContract contract) {
+
+	public ModelGenerator<T> with(GenerationContract contract) {
 		this.contract = contract;
 		return this;
 	}
 
-	public ModelGenerator quickly(int numberOfThreads) {
+	public ModelGenerator<T> quickly(int numberOfThreads) {
 		// Does nothing in the simple version
 		return this;
 	}
 
-	public Collection<?> andProvideAs(Collection<?> c) {
+	public Collection<T> andProvideAsCollection() {
+		Collection<T> outputCollection = new HashSet<T>();
+		// for (int i=0;i<this.numberOfModelObjs;i++) {
+		try {
+			T model = this.prototypeModelType.newInstance();
+			outputCollection.add(model);
+		} catch (Exception e) {
+			throw new RuntimeException("Problem occured", e);
+		}
+		// }
+
 		// create a holder collection
 		// start a loop
 		// create a empty model using the prototype
@@ -43,14 +53,14 @@ public class SimpleModelGenerator implements ModelGenerator {
 		// lookout for annotations which tell you how to generate the data
 		// use the setters to set it into the empty model
 		// add the model to the collection
-		return null;
+		return outputCollection;
 	}
 
-	public void andFillUpThis(Collection<?> c) {
+	public void andFillUpThis(Collection<T> c) {
 
 	}
 
-	public void andFillUpThis(Map<?, ?> m) {
+	public void andFillUpThis(Map<? extends Object, T> m) {
 
 	}
 

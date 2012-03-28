@@ -3,12 +3,12 @@ package com.nacnez.util.modelgen;
 import java.util.Collection;
 import java.util.Map;
 
-public interface ModelGenerator {
-	ModelGenerator make(long numberOfModelObjs);
-	ModelGenerator instancesOf(Object modelObj);
-	ModelGenerator with(GenerationContract contract);
-	ModelGenerator quickly (int numberOfThreads);
-	Collection<?> andProvideAs(Collection<?> c);
-	void andFillUpThis(Collection<?> c);
-	void andFillUpThis(Map<?,?> m);
+public interface ModelGenerator<T> {
+	ModelGenerator<T> make(long numberOfModelObjs);
+	ModelGenerator<T> instancesOf(Class<T> c);
+	ModelGenerator<T> with(GenerationContract contract);
+	ModelGenerator<T> quickly (int numberOfThreads);
+	Collection<T> andProvideAsCollection();
+	void andFillUpThis(Collection<T> c);
+	void andFillUpThis(Map<? extends Object,T> m);
 }
