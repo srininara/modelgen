@@ -37,14 +37,14 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
 	public Collection<T> andProvideAsCollection() {
 		Collection<T> outputCollection = new HashSet<T>();
-		// for (int i=0;i<this.numberOfModelObjs;i++) {
-		try {
-			T model = this.prototypeModelType.newInstance();
-			outputCollection.add(model);
-		} catch (Exception e) {
-			throw new RuntimeException("Problem occured", e);
+		for (int i=0;i<this.numberOfModelObjs;i++) {
+			try {
+				T model = this.prototypeModelType.newInstance();
+				outputCollection.add(model);
+			} catch (Exception e) {
+				throw new RuntimeException("Problem occured", e);
+			}
 		}
-		// }
 
 		// create a holder collection
 		// start a loop

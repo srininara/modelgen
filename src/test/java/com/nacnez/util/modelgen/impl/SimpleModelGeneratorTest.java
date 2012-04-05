@@ -2,7 +2,6 @@ package com.nacnez.util.modelgen.impl;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Before;
@@ -22,8 +21,14 @@ public class SimpleModelGeneratorTest {
 	}
 	
 	@Test
-	public void modelGenMustBeAbleToCreateAnEmptyModelWhenContractIsNotProvided() {
+	public void modelGeneratorShouldBeAbleToCreateAnEmptyModelWhenContractIsNotProvided() {
 		Collection<Person> c = smg.make(1).instancesOf(Person.class).andProvideAsCollection();
 		assertEquals(1,c.size());
+	}
+	
+	@Test
+	public void modelGeneratorShouldBeAbleToCreateAsManyEmptyModelsAreRequestedWhenContractIsNotProvided() {
+		Collection<Person> c = smg.make(10).instancesOf(Person.class).andProvideAsCollection();
+		assertEquals(10,c.size());
 	}
 }
