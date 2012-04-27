@@ -17,10 +17,10 @@ public class RandomStringGeneratorTest {
 	
 	@Test
 	public void generateRandomStringOfDefaultLength() {
-		String firstOutput = rsg.generateString();
+		String firstOutput = rsg.generate();
 		assertNotNull(firstOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
-		String secondOutput = rsg.generateString();
+		String secondOutput = rsg.generate();
 		assertNotNull(secondOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertFalse(firstOutput.equals(secondOutput));
@@ -29,10 +29,10 @@ public class RandomStringGeneratorTest {
 	@Test
 	public void generateRandomStringOfGivenLength() {
 		int length = 60;
-		String firstOutput = rsg.generateString(length);
+		String firstOutput = rsg.generate(length);
 		assertNotNull(firstOutput);
 		assertEquals(length,firstOutput.length());
-		String secondOutput = rsg.generateString(length);
+		String secondOutput = rsg.generate(length);
 		assertNotNull(secondOutput);
 		assertEquals(length,firstOutput.length());
 		assertFalse(firstOutput.equals(secondOutput));
@@ -40,11 +40,11 @@ public class RandomStringGeneratorTest {
 
 	@Test
 	public void generateRandomAlphaNumericStringOfDefaultLength() {
-		String firstOutput = rsg.generateAlphaNumericString();
+		String firstOutput = rsg.generateAlphaNumeric();
 		assertNotNull(firstOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlphanumeric(firstOutput));
-		String secondOutput = rsg.generateAlphaNumericString();
+		String secondOutput = rsg.generateAlphaNumeric();
 		assertNotNull(secondOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlphanumeric(firstOutput));
@@ -54,10 +54,10 @@ public class RandomStringGeneratorTest {
 	@Test
 	public void generateRandomAlphaNumericStringOfGivenLength() {
 		int length = 60;
-		String firstOutput = rsg.generateAlphaNumericString(length);
+		String firstOutput = rsg.generateAlphaNumeric(length);
 		assertNotNull(firstOutput);
 		assertEquals(length,firstOutput.length());
-		String secondOutput = rsg.generateAlphaNumericString(length);
+		String secondOutput = rsg.generateAlphaNumeric(length);
 		assertNotNull(secondOutput);
 		assertEquals(length,firstOutput.length());
 		assertFalse(firstOutput.equals(secondOutput));
@@ -65,11 +65,11 @@ public class RandomStringGeneratorTest {
 	
 	@Test
 	public void generateRandomAlphabeticStringOfDefaultLength() {
-		String firstOutput = rsg.generateAlphabeticString();
+		String firstOutput = rsg.generateAlphabetic();
 		assertNotNull(firstOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlpha(firstOutput));
-		String secondOutput = rsg.generateAlphabeticString();
+		String secondOutput = rsg.generateAlphabetic();
 		assertNotNull(secondOutput);
 		assertEquals(RandomStringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlpha(firstOutput));
@@ -79,10 +79,10 @@ public class RandomStringGeneratorTest {
 	@Test
 	public void generateRandomAlphabeticStringOfGivenLength() {
 		int length = 60;
-		String firstOutput = rsg.generateAlphabeticString(length);
+		String firstOutput = rsg.generateAlphabetic(length);
 		assertNotNull(firstOutput);
 		assertEquals(length,firstOutput.length());
-		String secondOutput = rsg.generateAlphabeticString(length);
+		String secondOutput = rsg.generateAlphabetic(length);
 		assertNotNull(secondOutput);
 		assertEquals(length,firstOutput.length());
 		assertFalse(firstOutput.equals(secondOutput));

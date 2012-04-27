@@ -4,16 +4,16 @@ public interface RandomStringGenerator {
 
 	int DEFAULT_LENGTH = 32;
 	
-	String generateString();
+	String generate();
 
-	String generateString(int length);
+	String generate(int length);
 
-	String generateAlphaNumericString();
+	String generateAlphaNumeric();
 
-	String generateAlphaNumericString(int length);
+	String generateAlphaNumeric(int length);
 
-	String generateAlphabeticString();
+	String generateAlphabetic();
 
-	String generateAlphabeticString(int length);
+	String generateAlphabetic(int length);
 
 }
