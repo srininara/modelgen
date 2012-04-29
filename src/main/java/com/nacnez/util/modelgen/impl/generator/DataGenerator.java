@@ -4,13 +4,11 @@ import java.util.Collection;
 
 public interface DataGenerator<T> {
 
-	DataGenerator<T> initToProvide();
-	
-	DataGenerator<T> randomData();
+	DataGenerator<T> provideRandomData();
 	
 	DataGenerator<T> ofLength(int size);
 
-	DataGenerator<T> dataFrom(Collection<T> possibleValues);
+	DataGenerator<T> provideRandomDataFrom(Collection<T> possibleValues);
 
 	T generate();
 	

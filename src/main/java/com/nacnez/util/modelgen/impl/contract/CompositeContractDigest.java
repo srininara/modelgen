@@ -3,6 +3,8 @@ package com.nacnez.util.modelgen.impl.contract;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.nacnez.util.modelgen.GenerationContract;
+
 public class CompositeContractDigest<T> implements ContractDigest<T> {
 
 	Collection<ContractDigest<T>> digests = new HashSet<ContractDigest<T>>();
@@ -26,6 +28,11 @@ public class CompositeContractDigest<T> implements ContractDigest<T> {
 	
 	public void add(ContractDigest<T> digest) {
 		this.digests.add(digest);
+	}
+
+	public ContractDigest<T> digest(Class<? extends GenerationContract> contract) {
+		// TODO Auto-generated method stub
+		return this;
 	}
 
 }
