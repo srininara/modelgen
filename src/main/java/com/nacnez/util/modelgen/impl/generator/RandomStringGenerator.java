@@ -1,5 +1,8 @@
 package com.nacnez.util.modelgen.impl.generator;
 
+import java.lang.annotation.Annotation;
+import java.util.List;
+
 public interface RandomStringGenerator {
 
 	int DEFAULT_LENGTH = 32;
@@ -15,5 +18,7 @@ public interface RandomStringGenerator {
 	String generateAlphabetic();
 
 	String generateAlphabetic(int length);
+
+	String generate(List<Annotation> constraints);
 
 }
