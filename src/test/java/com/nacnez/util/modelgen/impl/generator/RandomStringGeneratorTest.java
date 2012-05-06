@@ -15,11 +15,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
+import com.nacnez.util.modelgen.impl.generator.rules.*;
 
 public class RandomStringGeneratorTest {
 
 	RandomStringGenerator rsg;
+	
+	Mirror mirror = new Mirror();
 	
 	@Before
 	public void setup() {
@@ -28,13 +30,40 @@ public class RandomStringGeneratorTest {
 	
 	@Test
 	public void generateRandomStringWithSizeConstraint() {
-		//List<Annotation> constraints = new ArrayList<Annotation>();
-		List<Annotation> constraints = new Mirror().on(PersonContract.class).reflectAll().annotations().atMethod("setName").withArgs(String.class);
+		List<Annotation> constraints = getConstraints("setCreditCardNumber");
 		assertEquals(1,constraints.size());
 		assertTrue(constraints.get(0).annotationType().equals(Size.class));
 		int size = ((Size)constraints.get(0)).maxSize();
 		String generated = rsg.generate(constraints);
 		assertEquals(size, generated.length());
+	}
+
+	private List<Annotation> getConstraints(String methodName) {
+		return mirror.on(PersonContract.class).reflectAll().annotations().atMethod(methodName).withArgs(String.class);
+	}
+	
+	@Test
+	public void generatorMustGenerateARandomStringWhichHasOnlyAlphabetsAndIsOfGivenSize() {
+		List<Annotation> constraints = getConstraints("setFirstName");
+		assertEquals(2,constraints.size());
+		assertTrue(constraints.get(0).annotationType().equals(Size.class));
+		int size = ((Size)constraints.get(0)).maxSize();
+		assertTrue(constraints.get(1).annotationType().equals(Alphabetic.class));
+		String generated = rsg.generate(constraints);
+		assertEquals(size,generated.length());
+		assertTrue(StringUtils.isAlpha(generated));
+	}
+	
+	@Test
+	public void generatorMustGenerateARandomStringWhichIsAlphanumericAndIsOfGivenSize() {
+		List<Annotation> constraints = getConstraints("setPAN");
+		assertEquals(2,constraints.size());
+		assertTrue(constraints.get(1).annotationType().equals(Size.class));
+		int size = ((Size)constraints.get(1)).maxSize();
+		assertTrue(constraints.get(0).annotationType().equals(Alphanumeric.class));
+		String generated = rsg.generate(constraints);
+		assertEquals(size,generated.length());
+		assertTrue(StringUtils.isAlphanumeric(generated));
 	}
 	
 	@Test
