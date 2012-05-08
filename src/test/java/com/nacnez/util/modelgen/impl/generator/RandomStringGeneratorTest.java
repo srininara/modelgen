@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
 import java.util.List;
 
 import net.vidageek.mirror.dsl.Mirror;
@@ -15,7 +16,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
-import com.nacnez.util.modelgen.impl.generator.rules.*;
+import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
+import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.impl.generator.rules.FromList;
+import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class RandomStringGeneratorTest {
 
@@ -25,7 +29,10 @@ public class RandomStringGeneratorTest {
 	
 	@Before
 	public void setup() {
-		rsg = new ApacheCommonsRandomStringGeneratorImpl();
+		// Makes this a bit more of classic static driven test
+		// Also means that it is leaning more towards integration test. 
+		// Might want to move to a behaviour driven test. Not sure.
+		rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); 
 	}
 	
 	@Test
@@ -65,6 +72,18 @@ public class RandomStringGeneratorTest {
 		assertEquals(size,generated.length());
 		assertTrue(StringUtils.isAlphanumeric(generated));
 	}
+	
+	@Test
+	public void generatorMustGenerateARandomStringWhichIsFromAnArrayOfPossibleValues() {
+		List<Annotation> constraints = getConstraints("setMaritalStatus");
+		assertEquals(1,constraints.size());
+		assertTrue(constraints.get(0).annotationType().equals(FromList.class));
+		String[] fromList = ((FromList)constraints.get(0)).fromList();
+		String generated = rsg.generate(constraints);
+		assertTrue(Arrays.asList(fromList).contains(generated));
+	}
+	
+	
 	
 	@Test
 	public void generateRandomStringOfDefaultLength() {

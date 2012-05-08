@@ -7,10 +7,17 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class ApacheCommonsRandomStringGeneratorImpl implements
 		RandomStringGenerator {
+	private RandomIntegerGenerator rig;
+	
+	public ApacheCommonsRandomStringGeneratorImpl(
+			RandomIntegerGenerator rig) {
+		this.rig = rig;
+	}
 
 	public String generate() {
 		return generate(DEFAULT_LENGTH);
@@ -41,6 +48,12 @@ public class ApacheCommonsRandomStringGeneratorImpl implements
 		int index = -1;
 		boolean alpha = false;
 		boolean alphaNumeric = false;
+		
+		if((index=isConstraintPresent(constraints,FromList.class))!=-1) {
+			String [] possibleValues = ((FromList)constraints.get(index)).fromList();
+			int randomSelection = rig.generate(possibleValues.length);
+			return possibleValues[randomSelection];
+		}
 		
 		if((index=isConstraintPresent(constraints,Size.class))!=-1) {
 			size = ((Size)constraints.get(index)).maxSize();
