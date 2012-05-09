@@ -21,8 +21,6 @@ public class ContractDigestImplTest {
 	
 	private Mirror mirror = new Mirror();
 	
-	private String output = "SomeString";
-	
 	@Before
 	public void setup() {
 		cd = new ContractDigestImpl<Person>();
@@ -31,20 +29,7 @@ public class ContractDigestImplTest {
 	
 	@Test
 	public void digestingASimpleClassWhichHasASingleStringAttribute() {
-		Collection<DataGenerator<? extends Object>> internalGenerators = ((ContractDigestImpl<Person>)cd.digest(PersonContract.class)).getInternalGenerators();
-		
-		assertEquals(1,internalGenerators.size());
-		DataGenerator<?> generator = internalGenerators.iterator().next();
-		String output = (String)generator.generate();
-		assertNotNull(output);
 	}
 
-//	@Test
-//	public void basicTest() {
-//		cd.set(mirror.on(PersonContract.class).reflectAll().methods().get(0));
-//		Person model = new Person();
-//		cd.fill(model);
-//		assertNotNull(model.getName());
-//	}
 
 }
