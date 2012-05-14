@@ -13,11 +13,11 @@ public interface PersonContract extends GenerationContract {
 	
 	@Size(maxSize=32)
 	@Alphabetic
-	void setFirstName(String name);
+	void setFirstName(String firstName);
 	
 	@Alphanumeric
 	@Size(maxSize=15)
-	void setPAN(String pan);
+	void setPAN(String PAN);
 	
 	@FromList(fromList={"Single","Married","Divorced"})
 	void setMaritalStatus(String maritalStatus);

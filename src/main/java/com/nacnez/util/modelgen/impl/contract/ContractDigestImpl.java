@@ -1,21 +1,57 @@
 package com.nacnez.util.modelgen.impl.contract;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.vidageek.mirror.dsl.Mirror;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.generator.DataGenerator;
+import com.nacnez.util.modelgen.exampleModels.PersonContract;
+import com.nacnez.util.modelgen.impl.generator.ApacheCommonsRandomStringGeneratorImpl;
+import com.nacnez.util.modelgen.impl.generator.Generator;
+import com.nacnez.util.modelgen.impl.generator.JavaUtilRandomIntegerGeneratorImpl;
 
-public class ContractDigestImpl<T> implements ContractDigest<T> {
+public class ContractDigestImpl implements ContractDigest {
 
 
-	private Mirror mirror = new Mirror();
+	private Mirror mirror = new Mirror(); // Can be a singleton I think
 
-	public void fill(T model) {
+	// TODO - Might want to change the ordinary object above to a generic Generator object
+	private Map<Method,Generator> methodToGeneratorMapping = new HashMap<Method,Generator>(); 
+
+	private Map<Class<?>,Generator> typeToGeneratorMapping = new HashMap<Class<?>,Generator>(); // TODO - same as above
+	
+	private Class<? extends GenerationContract> contract;
+	
+	
+	public ContractDigestImpl() {
+		this.init();
+	}
+	
+	private void init() {
+		// Might want to initialize this through a DI container may be.
+		typeToGeneratorMapping.put(String.class, new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()));
+	}
+			
+	private List<Annotation> getConstraints(Class<?> clazz, String methodName) {
+		return mirror.on(clazz).reflectAll().annotations().atMethod(methodName).withArgs(String.class);
+	}
+
+	
+	public void fill(Object model) {
+		List<Method> methods = mirror.on(model.getClass()).reflectAll().methods();
+		for (Method method: methods) {
+			//find the contract method
+			Method contractMethod = new Mirror().on(contract).reflect().method(method.getName()).withAnyArgs();
+			Generator generator = methodToGeneratorMapping.get(contractMethod);
+			
+			if (generator != null) {
+				mirror.on(model).invoke().method(method).withArgs(generator.generate(getConstraints(contract, method.getName())));
+			}
+		}
 	}
 
 	public String info() {
@@ -23,14 +59,24 @@ public class ContractDigestImpl<T> implements ContractDigest<T> {
 	}
 	
 	
-	public ContractDigest<T> digest(Class<? extends GenerationContract> contract) {
-//		List<Method> methods = mirror.on(contract).reflectAll().methods();
-////		CompositeContractDigest<T> wrapperDigest = createCompositeContractDigest();
-//		for (Method method: methods) {
-//			Class<?>[] parameterTypes = method.getParameterTypes();
-//
-//		}
+	public ContractDigest digest(Class<? extends GenerationContract> contract) {
+		this.contract = contract;
+		List<Method> methods = mirror.on(contract).reflectAll().methods();
+		for (Method method: methods) {
+			Class<?>[] parameterTypes = method.getParameterTypes();
+			//TODO - Going to assume that there is only one parameter
+			// TODO - Also going to assume that the parameter type is String
+			methodToGeneratorMapping.put(method,typeToGeneratorMapping.get(parameterTypes[0]));
+		}
 		return this;
 	}
 
 }
+
+
+//List<Method> methods = mirror.on(contract).reflectAll().methods();
+////CompositeContractDigest<T> wrapperDigest = createCompositeContractDigest();
+//for (Method method: methods) {
+//Class<?>[] parameterTypes = method.getParameterTypes();
+//
+//}

@@ -5,8 +5,8 @@ import java.util.Collection;
 import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.impl.generator.DataGenerator;
 
-public interface ContractDigest<T> {
-	void fill(T model);
+public interface ContractDigest {
+	void fill(Object model);
 	String info();
-	ContractDigest<T> digest(Class<? extends GenerationContract> contract);
+	ContractDigest digest(Class<? extends GenerationContract> contract);
 }

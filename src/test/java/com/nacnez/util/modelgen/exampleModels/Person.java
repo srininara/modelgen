@@ -1,26 +1,47 @@
 package com.nacnez.util.modelgen.exampleModels;
 
+
 public class Person {
 
-	private String name;
-
-	private String nickName;
+	private String creditCardNumber;
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getNickName() {
-		return nickName;
-	}
-
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	private String firstName;
+	
+	private String PAN;
+	
+	private String maritalStatus;
+	
+	void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
 	}
 	
+	void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	void setPAN(String PAN) {
+		this.PAN = PAN;
+	}
+	
+	void setMaritalStatus(String maritalStatus) {
+		this.maritalStatus = maritalStatus;
+	}
 
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getPAN() {
+		return PAN;
+	}
+
+	public String getMaritalStatus() {
+		return maritalStatus;
+	}
 }
+
+

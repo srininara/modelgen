@@ -45,10 +45,6 @@ public class RandomStringGeneratorTest {
 		assertEquals(size, generated.length());
 	}
 
-	private List<Annotation> getConstraints(String methodName) {
-		return mirror.on(PersonContract.class).reflectAll().annotations().atMethod(methodName).withArgs(String.class);
-	}
-	
 	@Test
 	public void generatorMustGenerateARandomStringWhichHasOnlyAlphabetsAndIsOfGivenSize() {
 		List<Annotation> constraints = getConstraints("setFirstName");
@@ -82,8 +78,6 @@ public class RandomStringGeneratorTest {
 		String generated = rsg.generate(constraints);
 		assertTrue(Arrays.asList(fromList).contains(generated));
 	}
-	
-	
 	
 	@Test
 	public void generateRandomStringOfDefaultLength() {
@@ -158,5 +152,9 @@ public class RandomStringGeneratorTest {
 		assertFalse(firstOutput.equals(secondOutput));
 	}
 
+	private List<Annotation> getConstraints(String methodName) {
+		return mirror.on(PersonContract.class).reflectAll().annotations().atMethod(methodName).withArgs(String.class);
+	}
+	
 	
 }
