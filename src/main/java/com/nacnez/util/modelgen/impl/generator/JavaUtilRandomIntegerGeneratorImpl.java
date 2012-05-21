@@ -10,26 +10,27 @@ import com.nacnez.util.modelgen.impl.generator.rules.InvalidConstraintException;
 import com.nacnez.util.modelgen.impl.generator.rules.Limit;
 import com.nacnez.util.modelgen.impl.generator.rules.Negative;
 
-public class JavaUtilRandomIntegerGeneratorImpl<Integer> implements RandomIntegerGenerator, Generator<Integer> {
+public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerator, Generator {  
 
 	private static final String INVALID_LIMIT_CONSTRAINTS = "Invalid limit constraints";
 	private static Random random = new Random();
 	
-	public java.lang.Integer generate() {
+
+	public Integer generate() {
 		int output = random.nextInt(); 
 		int finalOutput = (output>0?output:-1*output);
 		return new java.lang.Integer(finalOutput);
 	}
 
-	public java.lang.Integer generateNegative() {
+	public Integer generateNegative() {
 		return -1 * generate();
 	}
 
-	public java.lang.Integer generate(int highLimit) {
+	public Integer generate(int highLimit) {
 		return random.nextInt(highLimit);
 	}
 
-	public java.lang.Integer generateNegative(int loLimit) {
+	public Integer generateNegative(int loLimit) {
 		int absLimit = Math.abs(loLimit);
 		return -1 * generate(absLimit);
 	}
@@ -83,5 +84,7 @@ public class JavaUtilRandomIntegerGeneratorImpl<Integer> implements RandomIntege
 		return (Integer)generate(hiLimit);
 
 	}
+
+
 	
 }

@@ -33,8 +33,8 @@ public class ContractDigestImpl implements ContractDigest {
 	
 	private void init() {
 		// Might want to initialize this through a DI container may be.
-		typeToGeneratorMapping.put(String.class, new ApacheCommonsRandomStringGeneratorImpl<String>(new JavaUtilRandomIntegerGeneratorImpl<Integer>()));
-		typeToGeneratorMapping.put(Integer.class, new JavaUtilRandomIntegerGeneratorImpl<Integer>());
+		typeToGeneratorMapping.put(String.class, new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()));
+		typeToGeneratorMapping.put(Integer.class, new JavaUtilRandomIntegerGeneratorImpl());
 	}
 			
 	private List<Annotation> getConstraints(Class<?> clazz, String methodName) {
@@ -52,7 +52,7 @@ public class ContractDigestImpl implements ContractDigest {
 		for (Method method: methods) {
 			//find the contract method
 			Method contractMethod = new Mirror().on(contract).reflect().method(method.getName()).withAnyArgs();
-			Generator<?> generator = methodToGeneratorMapping.get(contractMethod);
+			Generator generator = methodToGeneratorMapping.get(contractMethod);
 			
 			if (generator != null) {
 				mirror.on(model).invoke().method(method).withArgs(generator.generate(getConstraints(contract, method.getName())));

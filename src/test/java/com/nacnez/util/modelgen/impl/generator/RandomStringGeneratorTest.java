@@ -23,7 +23,7 @@ import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class RandomStringGeneratorTest {
 
-	ApacheCommonsRandomStringGeneratorImpl<String> rsg;
+	ApacheCommonsRandomStringGeneratorImpl rsg;
 	
 	Mirror mirror = new Mirror();
 	
@@ -32,7 +32,7 @@ public class RandomStringGeneratorTest {
 		// Makes this a bit more of classic static driven test
 		// Also means that it is leaning more towards integration test. 
 		// Might want to move to a behaviour driven test. Not sure.
-		rsg = new ApacheCommonsRandomStringGeneratorImpl<String>(new JavaUtilRandomIntegerGeneratorImpl()); 
+		rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); 
 	}
 	
 	@Test

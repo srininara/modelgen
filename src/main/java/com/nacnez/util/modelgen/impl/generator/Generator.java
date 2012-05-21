@@ -3,8 +3,8 @@ package com.nacnez.util.modelgen.impl.generator;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-public interface Generator<T> {
+public interface Generator {
 
-	T generate(List<Annotation> constraints);
+	Object generate(List<Annotation> constraints);
 
 }

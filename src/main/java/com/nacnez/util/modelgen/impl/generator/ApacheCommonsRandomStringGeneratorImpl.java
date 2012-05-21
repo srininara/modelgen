@@ -12,7 +12,7 @@ import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
-public class ApacheCommonsRandomStringGeneratorImpl<String> implements Generator<String> {
+public class ApacheCommonsRandomStringGeneratorImpl implements RandomStringGenerator, Generator {
 	public static int DEFAULT_LENGTH = 32;
 
 	private RandomIntegerGenerator rig;
@@ -22,27 +22,27 @@ public class ApacheCommonsRandomStringGeneratorImpl<String> implements Generator
 		this.rig = rig;
 	}
 
-	public java.lang.String generate() {
+	public String generate() {
 		return generate(DEFAULT_LENGTH);
 	}
 
-	public java.lang.String generate(int length) {
+	public String generate(int length) {
 		return RandomStringUtils.random(length);
 	}
 
-	public java.lang.String generateAlphaNumeric() {
+	public String generateAlphaNumeric() {
 		return generateAlphaNumeric(DEFAULT_LENGTH);
 	}
 
-	public java.lang.String generateAlphaNumeric(int length) {
+	public String generateAlphaNumeric(int length) {
 		return RandomStringUtils.randomAlphanumeric(length);
 	}
 
-	public java.lang.String generateAlphabetic() {
+	public String generateAlphabetic() {
 		return generateAlphabetic(DEFAULT_LENGTH);
 	}
 
-	public java.lang.String generateAlphabetic(int length) {
+	public String generateAlphabetic(int length) {
 		return RandomStringUtils.randomAlphabetic(length);
 	}
 
@@ -57,8 +57,8 @@ public class ApacheCommonsRandomStringGeneratorImpl<String> implements Generator
 		}
 		
 		if((index=isConstraintPresent(constraints,FromList.class))!=-1) {
-			java.lang.String[] possibleValues = ((FromList)constraints.get(index)).fromList();
-			int randomSelection = rig.generate(possibleValues.length);
+			String[] possibleValues = ((FromList)constraints.get(index)).fromList();
+			int randomSelection = ((Integer)rig.generate(possibleValues.length)).intValue();
 			return (String)possibleValues[randomSelection];
 		}
 		

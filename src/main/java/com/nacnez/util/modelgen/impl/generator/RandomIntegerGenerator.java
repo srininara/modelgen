@@ -1,6 +1,7 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-public interface RandomIntegerGenerator {
+
+public interface RandomIntegerGenerator<Integer> {
 
 	Integer generate();
 

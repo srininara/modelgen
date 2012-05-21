@@ -22,13 +22,13 @@ import com.nacnez.util.modelgen.impl.generator.rules.Negative;
 
 public class RandomIntegerGeneratorTest {
 
-	JavaUtilRandomIntegerGeneratorImpl<Integer> rig;
+	JavaUtilRandomIntegerGeneratorImpl rig;
 
 	Mirror mirror = new Mirror();
 
 	@Before
 	public void setup() {
-		rig = new JavaUtilRandomIntegerGeneratorImpl<Integer>();
+		rig = new JavaUtilRandomIntegerGeneratorImpl();
 	}
 	
 	@Test
