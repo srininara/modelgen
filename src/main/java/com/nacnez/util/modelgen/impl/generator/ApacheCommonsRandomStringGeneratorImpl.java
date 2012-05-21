@@ -1,5 +1,7 @@
 package com.nacnez.util.modelgen.impl.generator;
 
+import static com.nacnez.util.modelgen.impl.generator.GeneratorUtil.isConstraintPresent;
+
 import java.lang.annotation.Annotation;
 import java.util.List;
 
@@ -10,8 +12,9 @@ import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
-public class ApacheCommonsRandomStringGeneratorImpl implements
-		RandomStringGenerator {
+public class ApacheCommonsRandomStringGeneratorImpl<String> implements Generator<String> {
+	public static int DEFAULT_LENGTH = 32;
+
 	private RandomIntegerGenerator rig;
 	
 	public ApacheCommonsRandomStringGeneratorImpl(
@@ -19,27 +22,27 @@ public class ApacheCommonsRandomStringGeneratorImpl implements
 		this.rig = rig;
 	}
 
-	public String generate() {
+	public java.lang.String generate() {
 		return generate(DEFAULT_LENGTH);
 	}
 
-	public String generate(int length) {
+	public java.lang.String generate(int length) {
 		return RandomStringUtils.random(length);
 	}
 
-	public String generateAlphaNumeric() {
+	public java.lang.String generateAlphaNumeric() {
 		return generateAlphaNumeric(DEFAULT_LENGTH);
 	}
 
-	public String generateAlphaNumeric(int length) {
+	public java.lang.String generateAlphaNumeric(int length) {
 		return RandomStringUtils.randomAlphanumeric(length);
 	}
 
-	public String generateAlphabetic() {
+	public java.lang.String generateAlphabetic() {
 		return generateAlphabetic(DEFAULT_LENGTH);
 	}
 
-	public String generateAlphabetic(int length) {
+	public java.lang.String generateAlphabetic(int length) {
 		return RandomStringUtils.randomAlphabetic(length);
 	}
 
@@ -49,10 +52,14 @@ public class ApacheCommonsRandomStringGeneratorImpl implements
 		boolean alpha = false;
 		boolean alphaNumeric = false;
 		
+		if (constraints==null) {
+			return (String) generate();
+		}
+		
 		if((index=isConstraintPresent(constraints,FromList.class))!=-1) {
-			String [] possibleValues = ((FromList)constraints.get(index)).fromList();
+			java.lang.String[] possibleValues = ((FromList)constraints.get(index)).fromList();
 			int randomSelection = rig.generate(possibleValues.length);
-			return possibleValues[randomSelection];
+			return (String)possibleValues[randomSelection];
 		}
 		
 		if((index=isConstraintPresent(constraints,Size.class))!=-1) {
@@ -65,23 +72,12 @@ public class ApacheCommonsRandomStringGeneratorImpl implements
 			alphaNumeric = true;
 		}
 		if (alpha) {
-			return generateAlphabetic(size);
+			return (String) generateAlphabetic(size);
 		} else if (alphaNumeric) {
-			return generateAlphaNumeric(size);
+			return (String)generateAlphaNumeric(size);
 		} else {
-			return generate(size);
+			return (String)generate(size);
 		}
 	}
 
-	private int isConstraintPresent(List<Annotation> constraints,
-			Class<?> targetConstraintClass) {
-		for (int i=0;i<constraints.size();i++) {
-			if(constraints.get(i).annotationType().equals(targetConstraintClass)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
-	
 }

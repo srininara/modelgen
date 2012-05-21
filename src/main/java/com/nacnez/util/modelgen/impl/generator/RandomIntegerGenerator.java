@@ -2,26 +2,11 @@ package com.nacnez.util.modelgen.impl.generator;
 
 public interface RandomIntegerGenerator {
 
-	int generate();
+	Integer generate();
 
-	int generateNegative();
+	Integer generateNegative();
 	
-	int generate(int highLimit);
+	Integer generate(int highLimit);
 
-	int generateNegative(int loLimit);
+	Integer generateNegative(int loLimit);
 }
-
-
-/*
-String generateString();
-
-String generateString(int length);
-
-String generateAlphaNumericString();
-
-String generateAlphaNumericString(int length);
-
-String generateAlphabeticString();
-
-String generateAlphabeticString(int length);
-*/

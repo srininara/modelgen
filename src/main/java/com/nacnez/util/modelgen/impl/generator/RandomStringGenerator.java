@@ -1,10 +1,8 @@
 package com.nacnez.util.modelgen.impl.generator;
 
 
-public interface RandomStringGenerator extends Generator {
+public interface RandomStringGenerator {
 
-	int DEFAULT_LENGTH = 32;
-	
 	String generate();
 
 	String generate(int length);

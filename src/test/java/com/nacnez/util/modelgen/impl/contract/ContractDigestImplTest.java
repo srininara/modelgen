@@ -31,7 +31,7 @@ public class ContractDigestImplTest {
 	
 	
 	@Test
-	public void digestingASimpleClassWhichHasASingleStringAttribute() {
+	public void digestingASimpleClassWhichHasStringAndIntegerAttributes() {
 		
 		Person p = new Person();
 		cd.digest(PersonContract.class).fill(p);
@@ -47,8 +47,13 @@ public class ContractDigestImplTest {
 		
 		String[] fromList = {"Single","Married","Divorced"};
 		assertTrue(Arrays.asList(fromList).contains(p.getMaritalStatus()));
+
+		assertTrue(p.getId()<=1000000);
+		assertTrue(p.getId()>0);
 		
+		assertTrue(p.getCreditAmount()<0);
+		
+		assertTrue(p.getLoanAmount()<0);
+		assertTrue(p.getLoanAmount()>= -1000000);
 	}
-
-
 }
