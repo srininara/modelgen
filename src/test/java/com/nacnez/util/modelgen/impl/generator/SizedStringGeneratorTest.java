@@ -23,7 +23,7 @@ public class SizedStringGeneratorTest {
 	Mirror mirror = new Mirror();
 	
 	@Test
-	public void testBasicGeneration() {
+	public void testGenerationHappyCase() {
 		SizedStringGenerator ssg = spy(new SizedStringGenerator());
 		List<Annotation> constraints = getConstraints("setCreditCardNumber");
 		assertEquals(1,constraints.size());
@@ -64,15 +64,26 @@ public class SizedStringGeneratorTest {
 
 	@Test
 	public void ifPassedConstraintIsNotSizeAndNextGeneratorIsNotPresentGeneratorWillReturnNull() {
-		
+		SizedStringGenerator ssg = spy(new SizedStringGenerator());
+		List<Annotation> constraints = mock(List.class);
+		ConstraintList constraintList = mock(ConstraintList.class);
+		when(ssg.convert(constraints)).thenReturn(constraintList);
+		when(constraintList.contains(Size.class)).thenReturn(false);
+		String value = null;
+		String output = (String)ssg.generate(constraints);
+		verify(ssg).convert(constraints);
+		verify(constraintList).contains(Size.class);
+		assertEquals(value,output);
 	}
-
-	//	@Test
-//	public void ifConstraintsAreSentPassedGeneratorWillReturnNullIfThereIsNoNextGeneratorPresent() {
-//		BasicStringGenerator bsg = new BasicStringGenerator();
-//		List<Annotation> constraints = mock(List.class);
-//		String output = (String)bsg.generate(constraints);
-//		assertNull(output);
-//	}
+	
+	@Test
+	public void testConversion() {
+  		List<Annotation> constraints = getConstraints("setCreditCardNumber");
+		assertEquals(1,constraints.size());
+		assertTrue(constraints.get(0).annotationType().equals(Size.class));
+		SizedStringGenerator ssg = new SizedStringGenerator();
+		ConstraintList cl = ssg.convert(constraints);
+		assertEquals(constraints,cl.getInternalList());
+	}
 
 }

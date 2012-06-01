@@ -16,7 +16,11 @@ public class SizedStringGenerator implements Generator {
 	public Object generate(List<Annotation> constraints) {
 		ConstraintList constraintList = convert(constraints);
 		if (!constraintList.contains(Size.class)) {
-			return this.next.generate(constraints);
+			if (this.next!=null) {
+				return this.next.generate(constraints);
+			} else {
+				return null;
+			}
 		}
 		int index = -1;
 		int size = DEFAULT_LENGTH;
@@ -31,8 +35,7 @@ public class SizedStringGenerator implements Generator {
 	}
 
 	ConstraintList convert(List<Annotation> constraints) {
-		// TODO Auto-generated method stub
-		return null;
+		return new ConstraintList(constraints);
 	}
 
 }
