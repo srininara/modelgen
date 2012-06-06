@@ -7,35 +7,51 @@ import java.util.List;
 
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
-public class SizedStringGenerator implements Generator {
+public class SizedStringGenerator extends StringGenerator implements Generator {
 
-	RandomStringGenerator rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); // DI required
-	
+	RandomStringGenerator rsg = new ApacheCommonsRandomStringGeneratorImpl(
+			new JavaUtilRandomIntegerGeneratorImpl()); // DI required
+
 	private Generator next;
-	
-	public Object generate(List<Annotation> constraints) {
-		ConstraintList constraintList = convert(constraints);
-		if (!constraintList.contains(Size.class)) {
-			if (this.next!=null) {
-				return this.next.generate(constraints);
-			} else {
-				return null;
-			}
-		}
-		int index = -1;
-		int size = DEFAULT_LENGTH;
-		if((index=isConstraintPresent(constraints,Size.class))!=-1) {
-			size = ((Size)constraints.get(index)).maxSize();
-		}
-		return rsg.generate(size);
-	}
 
-	public void setNext(Generator next) {
-		this.next = next;
-	}
+	// public Object generate(List<Annotation> constraints) {
+	// ConstraintList constraintList = convert(constraints);
+	// if (!constraintList.contains(Size.class)) {
+	// if (this.next!=null) {
+	// return this.next.generate(constraints);
+	// } else {
+	// return null;
+	// }
+	// }
+	// int index = -1;
+	// int size = DEFAULT_LENGTH;
+	// if((index=isConstraintPresent(constraints,Size.class))!=-1) {
+	// size = ((Size)constraints.get(index)).maxSize();
+	// }
+	// return rsg.generate(size);
+	// }
+
+//	public void setNext(Generator next) {
+//		this.next = next;
+//	}
 
 	ConstraintList convert(List<Annotation> constraints) {
 		return new ConstraintList(constraints);
+	}
+
+	@Override
+	protected Object doGenerate(List<Annotation> constraints) {
+		ConstraintList constraintList = convert(constraints);
+		int size = DEFAULT_LENGTH;
+		size = ((Size) constraintList.get(Size.class)).maxSize();
+		return rsg.generate(size);
+	}
+
+	@Override
+	protected boolean applicable(List<Annotation> constraints) {
+		ConstraintList constraintList = convert(constraints);
+		return constraintList.contains(Size.class);
+
 	}
 
 }

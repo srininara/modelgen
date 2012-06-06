@@ -83,7 +83,8 @@ public class SizedStringGeneratorTest {
 		assertTrue(constraints.get(0).annotationType().equals(Size.class));
 		SizedStringGenerator ssg = new SizedStringGenerator();
 		ConstraintList cl = ssg.convert(constraints);
-		assertEquals(constraints,cl.getInternalList());
+		assertTrue(cl.contains(Size.class));
+		assertEquals(constraints.get(0),cl.get(Size.class));
 	}
 
 }

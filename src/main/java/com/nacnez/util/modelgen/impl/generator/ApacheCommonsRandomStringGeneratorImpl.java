@@ -80,4 +80,7 @@ public class ApacheCommonsRandomStringGeneratorImpl implements RandomStringGener
 		}
 	}
 
+	public void setNext(Generator next) {
+	}
+
 }

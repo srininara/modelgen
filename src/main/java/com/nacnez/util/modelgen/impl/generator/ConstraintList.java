@@ -7,9 +7,13 @@ public class ConstraintList {
 
 	private List<Annotation> backingList;
 
+	public ConstraintList(List<Annotation> backingConstraintsList) {
+		this.backingList = backingConstraintsList;
+	}
+
 	public boolean contains(Class<? extends Annotation> constraintClass) {
-		for (int i=0;i<backingList.size();i++) {
-			if(backingList.get(i).annotationType().equals(constraintClass)) {
+		for (Annotation constraint : backingList) {
+			if (constraintSame(constraint,constraintClass)) {
 				return true;
 			}
 		}
@@ -17,20 +21,16 @@ public class ConstraintList {
 	}
 
 	public Annotation get(Class<? extends Annotation> constraintClass) {
-		for (int i=0;i<backingList.size();i++) {
-			if(backingList.get(i).annotationType().equals(constraintClass)) {
-				return backingList.get(i);
+		for (Annotation constraint : backingList) {
+			if (constraintSame(constraint,constraintClass)) {
+				return constraint;
 			}
 		}
 		return null;
 	}
-
-	List<Annotation> getInternalList() {
-		return this.backingList;
-	}
 	
-	public ConstraintList(List<Annotation> backingConstraintsList) {
-		this.backingList = backingConstraintsList;
+	private boolean constraintSame(Annotation constraint, Class<? extends Annotation> constraintClass) {
+		return (constraint.annotationType().equals(constraintClass));
 	}
 
 }

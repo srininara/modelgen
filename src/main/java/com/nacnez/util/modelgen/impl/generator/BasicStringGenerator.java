@@ -3,23 +3,18 @@ package com.nacnez.util.modelgen.impl.generator;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-public class BasicStringGenerator implements Generator {
+public class BasicStringGenerator extends StringGenerator implements Generator {
 
 	RandomStringGenerator rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); // DI required
-	private Generator next;
 	
-	public Object generate(List<Annotation> constraints) {
-		if (constraints==null) {
-			return rsg.generate();
-		}
-		if (next!=null) {
-			return next.generate(constraints);
-		}
-		return null;
+	@Override
+	protected Object doGenerate(List<Annotation> constraints) {
+		return rsg.generate();
 	}
-
-	public void setNext(Generator next) {
-		this.next = next;
+	
+	@Override
+	protected boolean applicable(List<Annotation> constraints) {
+		return (constraints==null || constraints.size()==0);
 	}
 
 }

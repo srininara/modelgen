@@ -9,4 +9,7 @@ public interface Generator {
 
 	Object generate(List<Annotation> constraints);
 
+
+	void setNext(Generator next);
+
 }

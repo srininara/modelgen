@@ -85,6 +85,9 @@ public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerato
 
 	}
 
+	public void setNext(Generator next) {
+	}
+
 
 	
 }
