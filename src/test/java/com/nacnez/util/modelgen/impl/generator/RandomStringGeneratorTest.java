@@ -35,55 +35,55 @@ public class RandomStringGeneratorTest {
 		rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); 
 	}
 	
-	@Test
-	public void generateRandomStringWithNoConstraints() {
-		String generated = rsg.generate(null);
-		assertNotNull(generated);
-	}
-	
-	@Test
-	public void generateRandomStringWithSizeConstraint() {
-		List<Annotation> constraints = getConstraints("setCreditCardNumber");
-		assertEquals(1,constraints.size());
-		assertTrue(constraints.get(0).annotationType().equals(Size.class));
-		int size = ((Size)constraints.get(0)).maxSize();
-		String generated = rsg.generate(constraints);
-		assertEquals(size, generated.length());
-	}
-
-	@Test
-	public void generatorMustGenerateARandomStringWhichHasOnlyAlphabetsAndIsOfGivenSize() {
-		List<Annotation> constraints = getConstraints("setFirstName");
-		assertEquals(2,constraints.size());
-		assertTrue(constraints.get(0).annotationType().equals(Size.class));
-		int size = ((Size)constraints.get(0)).maxSize();
-		assertTrue(constraints.get(1).annotationType().equals(Alphabetic.class));
-		String generated = rsg.generate(constraints);
-		assertEquals(size,generated.length());
-		assertTrue(StringUtils.isAlpha(generated));
-	}
-	
-	@Test
-	public void generatorMustGenerateARandomStringWhichIsAlphanumericAndIsOfGivenSize() {
-		List<Annotation> constraints = getConstraints("setPAN");
-		assertEquals(2,constraints.size());
-		assertTrue(constraints.get(1).annotationType().equals(Size.class));
-		int size = ((Size)constraints.get(1)).maxSize();
-		assertTrue(constraints.get(0).annotationType().equals(Alphanumeric.class));
-		String generated = rsg.generate(constraints);
-		assertEquals(size,generated.length());
-		assertTrue(StringUtils.isAlphanumeric(generated));
-	}
-	
-	@Test
-	public void generatorMustGenerateARandomStringWhichIsFromAnArrayOfPossibleValues() {
-		List<Annotation> constraints = getConstraints("setMaritalStatus");
-		assertEquals(1,constraints.size());
-		assertTrue(constraints.get(0).annotationType().equals(FromList.class));
-		String[] fromList = ((FromList)constraints.get(0)).fromList();
-		String generated = rsg.generate(constraints);
-		assertTrue(Arrays.asList(fromList).contains(generated));
-	}
+//	@Test
+//	public void generateRandomStringWithNoConstraints() {
+//		String generated = rsg.generate(null);
+//		assertNotNull(generated);
+//	}
+//	
+//	@Test
+//	public void generateRandomStringWithSizeConstraint() {
+//		List<Annotation> constraints = getConstraints("setCreditCardNumber");
+//		assertEquals(1,constraints.size());
+//		assertTrue(constraints.get(0).annotationType().equals(Size.class));
+//		int size = ((Size)constraints.get(0)).maxSize();
+//		String generated = rsg.generate(constraints);
+//		assertEquals(size, generated.length());
+//	}
+//
+//	@Test
+//	public void generatorMustGenerateARandomStringWhichHasOnlyAlphabetsAndIsOfGivenSize() {
+//		List<Annotation> constraints = getConstraints("setFirstName");
+//		assertEquals(2,constraints.size());
+//		assertTrue(constraints.get(0).annotationType().equals(Size.class));
+//		int size = ((Size)constraints.get(0)).maxSize();
+//		assertTrue(constraints.get(1).annotationType().equals(Alphabetic.class));
+//		String generated = rsg.generate(constraints);
+//		assertEquals(size,generated.length());
+//		assertTrue(StringUtils.isAlpha(generated));
+//	}
+//	
+//	@Test
+//	public void generatorMustGenerateARandomStringWhichIsAlphanumericAndIsOfGivenSize() {
+//		List<Annotation> constraints = getConstraints("setPAN");
+//		assertEquals(2,constraints.size());
+//		assertTrue(constraints.get(1).annotationType().equals(Size.class));
+//		int size = ((Size)constraints.get(1)).maxSize();
+//		assertTrue(constraints.get(0).annotationType().equals(Alphanumeric.class));
+//		String generated = rsg.generate(constraints);
+//		assertEquals(size,generated.length());
+//		assertTrue(StringUtils.isAlphanumeric(generated));
+//	}
+//	
+//	@Test
+//	public void generatorMustGenerateARandomStringWhichIsFromAnArrayOfPossibleValues() {
+//		List<Annotation> constraints = getConstraints("setMaritalStatus");
+//		assertEquals(1,constraints.size());
+//		assertTrue(constraints.get(0).annotationType().equals(FromList.class));
+//		String[] fromList = ((FromList)constraints.get(0)).fromList();
+//		String generated = rsg.generate(constraints);
+//		assertTrue(Arrays.asList(fromList).contains(generated));
+//	}
 	
 	@Test
 	public void generateRandomStringOfDefaultLength() {

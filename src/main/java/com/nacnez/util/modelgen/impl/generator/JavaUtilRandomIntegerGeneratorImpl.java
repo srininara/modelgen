@@ -1,16 +1,8 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-import static com.nacnez.util.modelgen.impl.generator.GeneratorUtil.isConstraintPresent;
-
-import java.lang.annotation.Annotation;
-import java.util.List;
 import java.util.Random;
 
-import com.nacnez.util.modelgen.impl.generator.rules.InvalidConstraintException;
-import com.nacnez.util.modelgen.impl.generator.rules.Limit;
-import com.nacnez.util.modelgen.impl.generator.rules.Negative;
-
-public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerator, Generator {  
+public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerator {  
 
 	private static final String INVALID_LIMIT_CONSTRAINTS = "Invalid limit constraints";
 	private static Random random = new Random();
@@ -35,59 +27,4 @@ public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerato
 		return -1 * generate(absLimit);
 	}
 
-	public Integer generate(List<Annotation> constraints) {
-		int index = -1;
-		int loLimit = 0;
-		int hiLimit = 0;
-		boolean negativeReqd = false;
-		boolean limitApplicable = false;
-		if (constraints==null) {
-			return (Integer) generate();
-		}
-		
-		if((index=isConstraintPresent(constraints,Limit.class))!=-1) {
-			limitApplicable = true;
-			Limit limit = (Limit)constraints.get(index);
-			hiLimit = limit.highLimit();
-			loLimit = limit.lowLimit();
-		}
-		
-		index = -1;
-		if((index=isConstraintPresent(constraints,Negative.class))!=-1) {
-			negativeReqd = true;
-		}
-		
-		if (hiLimit>0 && loLimit>0) {
-			throw new InvalidConstraintException(INVALID_LIMIT_CONSTRAINTS);
-		}
-		
-		if (loLimit<0 && hiLimit<0) {
-			throw new InvalidConstraintException(INVALID_LIMIT_CONSTRAINTS);
-		}
-		
-		if (!negativeReqd && (hiLimit < 0 || loLimit < 0)) {
-			throw new InvalidConstraintException(INVALID_LIMIT_CONSTRAINTS);
-		}
-		
-		if (negativeReqd && (hiLimit > 0 || loLimit > 0)) {
-			throw new InvalidConstraintException(INVALID_LIMIT_CONSTRAINTS);
-		}
-
-		if (negativeReqd && !limitApplicable) {
-			return (Integer)generateNegative();
-		}
-		
-		if (negativeReqd && limitApplicable) {
-			return (Integer)generateNegative(loLimit);
-		}
-		
-		return (Integer)generate(hiLimit);
-
-	}
-
-	public void setNext(Generator next) {
-	}
-
-
-	
 }

@@ -6,6 +6,8 @@ import java.util.Map;
 
 import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.ModelGenerator;
+import com.nacnez.util.modelgen.impl.contract.ContractDigest;
+import com.nacnez.util.modelgen.impl.contract.ContractDigestImpl;
 
 public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
@@ -13,7 +15,7 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
 	private Class<T> prototypeModelType;
 
-	private GenerationContract contract;
+	private Class<? extends GenerationContract> contract;
 
 	public ModelGenerator<T> make(long numberOfModelObjs) {
 		this.numberOfModelObjs = numberOfModelObjs;
@@ -25,7 +27,7 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 		return this;
 	}
 
-	public ModelGenerator<T> with(GenerationContract contract) {
+	public ModelGenerator<T> with(Class<? extends GenerationContract> contract) {
 		this.contract = contract;
 		return this;
 	}
@@ -40,6 +42,7 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 		for (int i=0;i<this.numberOfModelObjs;i++) {
 			try {
 				T model = this.prototypeModelType.newInstance();
+				getDigest().digest(contract).fill(model);
 				outputCollection.add(model);
 			} catch (Exception e) {
 				throw new RuntimeException("Problem occured", e);
@@ -54,6 +57,11 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 		// use the setters to set it into the empty model
 		// add the model to the collection
 		return outputCollection;
+	}
+	
+	ContractDigest getDigest() {
+		ContractDigest cd = new ContractDigestImpl();
+		return cd;
 	}
 
 	public void andFillUpThis(Collection<T> c) {
