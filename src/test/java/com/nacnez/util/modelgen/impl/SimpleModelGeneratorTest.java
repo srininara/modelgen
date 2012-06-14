@@ -2,13 +2,13 @@ package com.nacnez.util.modelgen.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.nacnez.util.modelgen.exampleModels.Person;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
 
@@ -49,30 +49,56 @@ public class SimpleModelGeneratorTest {
 	public void modelGeneratorShouldBeAbleToCreateAnEmptyModelWhenContractIsNotProvided() {
 		Collection<SimpleMockObject> c = smg.make(1)
 				.instancesOf(SimpleMockObject.class)
-				.with(SimpleMockGenerationContract.class)
 				.andProvideAsCollection();
 		assertEquals(1, c.size());
 		SimpleMockObject smo = c.iterator().next();
-		assertSimpleMockObject(smo);
-	}
-
-	void assertSimpleMockObject(SimpleMockObject smo) {
-		assertNotNull(smo.getMockUnSizedString());
-		assertNotNull(smo.getMockSizedString());
-		assertEquals(32, smo.getMockSizedString().length());
-
+		assertEmptySimpleMockObject(smo);
 	}
 
 	@Test
 	public void modelGeneratorShouldBeAbleToCreateAsManyEmptyModelsAreRequestedWhenContractIsNotProvided() {
 		Collection<SimpleMockObject> c = smg.make(10)
 				.instancesOf(SimpleMockObject.class)
+				.andProvideAsCollection();
+		assertEquals(10, c.size());
+		for (SimpleMockObject smo : c) {
+			assertEmptySimpleMockObject(smo);
+		}
+	}
+
+	@Test
+	public void modelGeneratorShouldBeAbleToCreateAnEmptyModelWhenContractIsProvided() {
+		Collection<SimpleMockObject> c = smg.make(1)
+				.instancesOf(SimpleMockObject.class)
+				.with(SimpleMockGenerationContract.class)
+				.andProvideAsCollection();
+		assertEquals(1, c.size());
+		SimpleMockObject smo = c.iterator().next();
+		assertFilledSimpleMockObject(smo);
+	}
+
+	@Test
+	public void modelGeneratorShouldBeAbleToCreateAsManyEmptyModelsAreRequestedWhenContractIsProvided() {
+		Collection<SimpleMockObject> c = smg.make(10)
+				.instancesOf(SimpleMockObject.class)
 				.with(SimpleMockGenerationContract.class)
 				.andProvideAsCollection();
 		assertEquals(10, c.size());
 		for (SimpleMockObject smo : c) {
-			assertSimpleMockObject(smo);
+			assertFilledSimpleMockObject(smo);
 		}
 	}
 
+	void assertFilledSimpleMockObject(SimpleMockObject smo) {
+		assertNotNull(smo.getMockUnSizedString());
+		assertNotNull(smo.getMockSizedString());
+		assertEquals(32, smo.getMockSizedString().length());
+
+	}
+
+	void assertEmptySimpleMockObject(SimpleMockObject smo) {
+		assertNull(smo.getMockUnSizedString());
+		assertNull(smo.getMockSizedString());
+	}
+	
 }

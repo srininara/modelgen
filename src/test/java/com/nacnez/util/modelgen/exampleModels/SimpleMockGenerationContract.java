@@ -9,5 +9,7 @@ public interface SimpleMockGenerationContract extends GenerationContract {
 	void setMockSizedString(String mockSizedString);
 	
 	void setMockUnSizedString(String mockUnSizedString);
-
+	
+	void setMockSizedStringParam(@Size(maxSize=50) String mockSizedStringParam);
+	
 }

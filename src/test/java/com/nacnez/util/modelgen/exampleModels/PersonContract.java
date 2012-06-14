@@ -34,4 +34,6 @@ public interface PersonContract extends GenerationContract {
 	@Limit(lowLimit=-1000000, highLimit = 0)
 	void setLoanAmount(Integer id);
 	
+	void setMockSizedStringParam(@Size(maxSize=32) String mockSizedStringParam);
+	
 }

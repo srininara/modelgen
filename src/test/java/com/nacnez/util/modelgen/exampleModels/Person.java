@@ -20,6 +20,8 @@ public class Person {
 
 	private Integer loanAmount;
 	
+	private String mockSizedStringParam;
+	
 	void setCreditCardNumber(String creditCardNumber) {
 		this.creditCardNumber = creditCardNumber;
 	}
@@ -75,6 +77,15 @@ public class Person {
 	public void setLoanAmount(Integer loanAmount) {
 		this.loanAmount = loanAmount;
 	}
+	
+	public String getMockedSizedStringParam() {
+		return mockSizedStringParam;
+	}
+
+	public void setMockSizedStringParam(String mockSizedStringParam) {
+		this.mockSizedStringParam = mockSizedStringParam;
+	}
+
 }
 
 

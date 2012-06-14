@@ -2,6 +2,7 @@ package com.nacnez.util.modelgen.impl.contract;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import net.vidageek.mirror.dsl.Mirror;
 
 import com.nacnez.util.modelgen.GenerationContract;
+import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.impl.generator.ApacheCommonsRandomStringGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.Generator;
@@ -49,7 +51,13 @@ public class ContractDigestImpl implements ContractDigest {
 	
 	private List<Annotation> getConstraints(Class<?> clazz, String methodName) {
 		Class<?> parameterType = getParameterType(clazz,methodName);
-		return mirror.on(clazz).reflectAll().annotations().atMethod(methodName).withArgs(parameterType);
+		List<Annotation> constraints = mirror.on(clazz).reflectAll().annotations().atMethod(methodName).withArgs(parameterType);
+
+		if (constraints==null || constraints.size()==0) {
+			Method m = mirror.on(clazz).reflect().method(methodName).withAnyArgs();
+			constraints = Arrays.asList(m.getParameterAnnotations()[0]);
+		}
+		return constraints;
 	}
 	
 	private Class<?> getParameterType(Class<?> clazz, String methodName) {

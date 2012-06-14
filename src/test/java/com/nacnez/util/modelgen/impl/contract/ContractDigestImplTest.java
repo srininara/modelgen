@@ -66,5 +66,7 @@ public class ContractDigestImplTest {
 		assertNotNull(smo.getMockUnSizedString());
 		assertNotNull(smo.getMockSizedString());
 		assertEquals(32,smo.getMockSizedString().length());
+		assertNotNull(smo.getMockedSizedStringParam());
+		assertEquals(50,smo.getMockedSizedStringParam().length());
 	}
 }

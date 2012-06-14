@@ -42,7 +42,9 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 		for (int i=0;i<this.numberOfModelObjs;i++) {
 			try {
 				T model = this.prototypeModelType.newInstance();
-				getDigest().digest(contract).fill(model);
+				if (contract!=null) {
+					getDigest().digest(contract).fill(model);
+				}
 				outputCollection.add(model);
 			} catch (Exception e) {
 				throw new RuntimeException("Problem occured", e);
