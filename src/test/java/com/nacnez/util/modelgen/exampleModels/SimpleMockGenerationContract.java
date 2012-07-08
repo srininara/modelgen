@@ -1,6 +1,7 @@
 package com.nacnez.util.modelgen.exampleModels;
 
 import com.nacnez.util.modelgen.GenerationContract;
+import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public interface SimpleMockGenerationContract extends GenerationContract {
@@ -11,5 +12,8 @@ public interface SimpleMockGenerationContract extends GenerationContract {
 	void setMockUnSizedString(String mockUnSizedString);
 	
 	void setMockSizedStringParam(@Size(maxSize=50) String mockSizedStringParam);
+	
+	@Alphabetic
+	void setMockAlphabeticString(String mockAlphabeticString);
 	
 }

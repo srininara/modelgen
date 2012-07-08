@@ -2,11 +2,14 @@ package com.nacnez.util.modelgen.impl.generator;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import com.google.inject.Inject;
+
 public class ApacheCommonsRandomStringGeneratorImpl implements RandomStringGenerator {
 	public static int DEFAULT_LENGTH = 32;
 
 	private RandomIntegerGenerator rig;
 	
+	@Inject
 	public ApacheCommonsRandomStringGeneratorImpl(
 			RandomIntegerGenerator rig) {
 		this.rig = rig;

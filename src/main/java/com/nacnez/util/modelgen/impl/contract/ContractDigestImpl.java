@@ -10,13 +10,13 @@ import java.util.Map;
 import net.vidageek.mirror.dsl.Mirror;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.impl.generator.ApacheCommonsRandomStringGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.Generator;
 import com.nacnez.util.modelgen.impl.generator.JavaUtilRandomIntegerGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.RandomStringGenerator;
-import com.nacnez.util.modelgen.impl.generator.SizedStringGenerator;
+import com.nacnez.util.modelgen.impl.generator.SizedStringDecorator;
+import com.nacnez.util.modelgen.impl.generator.StringGenerator;
 
 public class ContractDigestImpl implements ContractDigest {
 
@@ -24,9 +24,11 @@ public class ContractDigestImpl implements ContractDigest {
 	private Mirror mirror = new Mirror(); // Can be a singleton I think
 
 	// TODO - Might want to change the ordinary object above to a generic Generator object
-	private Map<Method,Generator> methodToGeneratorMapping = new HashMap<Method,Generator>(); 
+	private Map<Method,Generator> methodToGeneratorMapping = new HashMap<Method,Generator>();
+	
+	private Map<Class<?>,Generator> typeToGeneratorMapping; // TODO - same as above
 
-	private Map<Class<?>,Generator> typeToGeneratorMapping = new HashMap<Class<?>,Generator>(); // TODO - same as above
+//	private Map<Class<?>,Generator> typeToGeneratorMapping = new HashMap<Class<?>,Generator>(); // TODO - same as above
 	
 	private Class<? extends GenerationContract> contract;
 	
@@ -44,9 +46,12 @@ public class ContractDigestImpl implements ContractDigest {
 			
 	private Generator getStringGenerator() {
 		RandomStringGenerator rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl());
-		Generator basicStringGenerator = new BasicStringGenerator(); // NOTE: Might be worthwhile to support an extra constructor as well
-		basicStringGenerator.setNext(new SizedStringGenerator());
-		return basicStringGenerator;
+		// NOTE: Might be worthwhile to support an extra constructor as well
+		Generator basicStringGenerator = new BasicStringGenerator();
+		//TODO: Can I remove the reference of StringGenerator
+		Generator sizedStringGenerator = new SizedStringDecorator((StringGenerator) basicStringGenerator); 
+		sizedStringGenerator.setNext(basicStringGenerator); 
+		return sizedStringGenerator;
 	}
 	
 	private List<Annotation> getConstraints(Class<?> clazz, String methodName) {

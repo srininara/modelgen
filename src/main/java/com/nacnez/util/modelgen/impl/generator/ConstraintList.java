@@ -10,6 +10,10 @@ public class ConstraintList {
 	public ConstraintList(List<Annotation> backingConstraintsList) {
 		this.backingList = backingConstraintsList;
 	}
+	
+	public boolean isBacked() {
+		return backingList!=null && backingList.size()>0;
+	}
 
 	public boolean contains(Class<? extends Annotation> constraintClass) {
 		for (Annotation constraint : backingList) {

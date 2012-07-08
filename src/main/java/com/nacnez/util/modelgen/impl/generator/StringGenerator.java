@@ -8,11 +8,16 @@ public abstract class StringGenerator {
 	public StringGenerator() {
 		super();
 	}
+	
+	protected ConstraintList convert(List<Annotation> constraints) {
+		return new ConstraintList(constraints);
+	}
+
 
 	public final Object generate(List<Annotation> constraints) {
-		
-		if (applicable(constraints)) {
-			return doGenerate(constraints);
+		ConstraintList list = convert(constraints);
+		if (applicable(list)) {
+			return doGenerate(list,getLength(list));
 		} 
 
 		if (next!=null) {
@@ -27,9 +32,15 @@ public abstract class StringGenerator {
 		this.next = next;
 	}
 	
-	protected abstract Object doGenerate(List<Annotation> constraints);
+	protected abstract Object doGenerate(ConstraintList constraintList, int size);
 	
-	protected abstract boolean applicable(List<Annotation> constraints);
+	protected int getLength(ConstraintList constraintList) {
+		return ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH;
+	}
+	
+	protected abstract boolean applicable(ConstraintList constraintList);
+	
+	
 	
 
 

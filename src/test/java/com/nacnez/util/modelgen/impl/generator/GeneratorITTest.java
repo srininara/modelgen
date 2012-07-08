@@ -1,6 +1,7 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -18,7 +19,7 @@ public class GeneratorITTest {
 	@Test
 	public void testGeneratorChain() {
 		Generator strGenFront = new BasicStringGenerator();
-		Generator strGenBack = new SizedStringGenerator();
+		Generator strGenBack = new SizedStringDecorator((StringGenerator)strGenFront);
 		strGenFront.setNext(strGenBack);
 		List<Annotation> constraints1 = getConstraints("setMockUnSizedString");
 		assertNotNull(strGenFront.generate(constraints1));

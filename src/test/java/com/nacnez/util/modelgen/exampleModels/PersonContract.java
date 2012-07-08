@@ -13,7 +13,7 @@ public interface PersonContract extends GenerationContract {
 	@Size(maxSize=15)
 	void setCreditCardNumber(String creditCardNumber);
 	
-	@Size(maxSize=32)
+	@Size(maxSize=35)
 	@Alphabetic
 	void setFirstName(String firstName);
 	

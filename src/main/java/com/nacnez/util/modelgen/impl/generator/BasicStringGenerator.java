@@ -1,20 +1,21 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-import java.lang.annotation.Annotation;
-import java.util.List;
+import com.google.inject.Inject;
+
 
 public class BasicStringGenerator extends StringGenerator implements Generator {
 
-	RandomStringGenerator rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); // DI required
+	@Inject
+	private RandomStringGenerator rsg;
 	
 	@Override
-	protected Object doGenerate(List<Annotation> constraints) {
-		return rsg.generate();
+	protected Object doGenerate(ConstraintList constraintList, int size) {
+		return rsg.generate(size);
 	}
 	
 	@Override
-	protected boolean applicable(List<Annotation> constraints) {
-		return (constraints==null || constraints.size()==0);
+	protected boolean applicable(ConstraintList constraintList) {
+		return true;
 	}
 
 }

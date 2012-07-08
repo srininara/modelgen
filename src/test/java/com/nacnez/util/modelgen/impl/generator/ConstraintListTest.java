@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.vidageek.mirror.dsl.Mirror;
@@ -61,9 +62,28 @@ public class ConstraintListTest {
 		assertFalse(cl.contains(Alphanumeric.class));
 		
 		Size constraint = (Size)cl.get(Size.class);
-		assertEquals(32,constraint.maxSize());
-		
-		
+		assertEquals(35,constraint.maxSize());
+	}
+	
+	@Test
+	public void ifConstraintListIsBackedByANonEmptyListOfConstraintsThenIsBackedReturnsTrue() {
+		List<Annotation> constraints = getConstraints("setCreditCardNumber");
+		assertEquals(1, constraints.size());
+		assertTrue(constraints.get(0).annotationType().equals(Size.class));
+		ConstraintList cl = new ConstraintList(constraints);
+		assertTrue(cl.isBacked());
+	}
+	
+	@Test
+	public void ifConstraintListIsBackedByNullThenIsBackedReturnsFalse() {
+		ConstraintList cl = new ConstraintList(null);
+		assertFalse(cl.isBacked());
+	}
+
+	@Test
+	public void ifConstraintListIsBackedByEmptyListThenIsBackedReturnsFalse() {
+		ConstraintList cl = new ConstraintList(new ArrayList<Annotation>());
+		assertFalse(cl.isBacked());
 	}
 
 	private List<Annotation> getConstraints(String methodName) {
