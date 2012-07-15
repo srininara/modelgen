@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 
+import com.google.inject.Inject;
 import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.ModelGenerator;
 import com.nacnez.util.modelgen.impl.contract.ContractDigest;
@@ -16,6 +17,9 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 	private Class<T> prototypeModelType;
 
 	private Class<? extends GenerationContract> contract;
+	
+	@Inject
+	private ContractDigest digest;
 
 	public ModelGenerator<T> make(long numberOfModelObjs) {
 		this.numberOfModelObjs = numberOfModelObjs;
@@ -43,7 +47,7 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 			try {
 				T model = this.prototypeModelType.newInstance();
 				if (contract!=null) {
-					getDigest().digest(contract).fill(model);
+					digest.digest(contract).fill(model);
 				}
 				outputCollection.add(model);
 			} catch (Exception e) {
@@ -61,11 +65,6 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 		return outputCollection;
 	}
 	
-	ContractDigest getDigest() {
-		ContractDigest cd = new ContractDigestImpl();
-		return cd;
-	}
-
 	public void andFillUpThis(Collection<T> c) {
 
 	}

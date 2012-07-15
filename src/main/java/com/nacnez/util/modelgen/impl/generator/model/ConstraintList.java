@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.model;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

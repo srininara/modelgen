@@ -24,12 +24,12 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
-import com.nacnez.util.modelgen.impl.contract.ContractDigestImpl;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
+import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
-public class AlphabeticSizedStringGeneratorTest {
+public class AlphanumericSizedStringGeneratorTest {
 
 	Mirror mirror = new Mirror();
 
@@ -37,19 +37,19 @@ public class AlphabeticSizedStringGeneratorTest {
 	public void testHappyCase() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 
-		AlphabeticStringGenerator asg = spy(injector.getInstance(AlphabeticStringGenerator.class));
+		AlphanumericStringGenerator asg = spy(injector.getInstance(AlphanumericStringGenerator.class));
 		StringGenerator assg = spy(new SizedStringDecorator(asg));
-		List<Annotation> constraints = getConstraints("setFirstName");
+		List<Annotation> constraints = getConstraints("setPAN");
 		assertEquals(2,constraints.size());
 		Class<? extends Annotation> constraint1 = constraints.get(0).annotationType();
 		Class<? extends Annotation> constraint2 = constraints.get(1).annotationType(); 
-		assertTrue(constraint1.equals(Alphabetic.class) || constraint1.equals(Size.class));
-		assertTrue(constraint2.equals(Alphabetic.class) || constraint2.equals(Size.class));
+		assertTrue(constraint1.equals(Alphanumeric.class) || constraint1.equals(Size.class));
+		assertTrue(constraint2.equals(Alphanumeric.class) || constraint2.equals(Size.class));
 
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(assg.convert(constraints)).thenReturn(constraintList);
 		when(constraintList.contains(Size.class)).thenReturn(true);
-		when(constraintList.contains(Alphabetic.class)).thenReturn(true);
+		when(constraintList.contains(Alphanumeric.class)).thenReturn(true);
 		when(constraintList.get(Size.class)).thenReturn((constraint1.equals(Size.class))?constraints.get(0):constraints.get(1));
 		
 		int size = ((constraint1.equals(Size.class))?((Size)constraints.get(0)).maxSize():((Size)constraints.get(1)).maxSize());
@@ -60,11 +60,11 @@ public class AlphabeticSizedStringGeneratorTest {
 		Generator anotherGen = mock(Generator.class);
 		String str = (String) assg.generate(constraints);
 		verify(assg).convert(constraints);
-		verify(constraintList).contains(Alphabetic.class);
-		verify(constraintList,never()).get(Alphabetic.class);
+		verify(constraintList).contains(Alphanumeric.class);
+		verify(constraintList,never()).get(Alphanumeric.class);
 		verify(constraintList).contains(Size.class);
 		assertNotNull(str);
-		assertTrue(StringUtils.isAlpha(str));
+		assertTrue(StringUtils.isAlphanumeric(str));
 		assertEquals(size,str.length());
 		
 	}

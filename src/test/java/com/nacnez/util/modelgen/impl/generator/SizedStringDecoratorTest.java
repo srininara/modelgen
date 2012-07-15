@@ -24,6 +24,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class SizedStringDecoratorTest {

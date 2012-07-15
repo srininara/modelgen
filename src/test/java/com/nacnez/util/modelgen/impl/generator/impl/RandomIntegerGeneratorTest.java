@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.exampleModels.WrongContract;
+import com.nacnez.util.modelgen.impl.generator.impl.JavaUtilRandomIntegerGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.rules.InvalidConstraintException;
 import com.nacnez.util.modelgen.impl.generator.rules.Limit;
 import com.nacnez.util.modelgen.impl.generator.rules.Negative;

@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,6 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
+import com.nacnez.util.modelgen.impl.generator.impl.ApacheCommonsRandomStringGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.FromList;
@@ -32,7 +33,7 @@ public class RandomStringGeneratorTest {
 		// Makes this a bit more of classic static driven test
 		// Also means that it is leaning more towards integration test. 
 		// Might want to move to a behaviour driven test. Not sure.
-		rsg = new ApacheCommonsRandomStringGeneratorImpl(new JavaUtilRandomIntegerGeneratorImpl()); 
+		rsg = new ApacheCommonsRandomStringGeneratorImpl(); //new JavaUtilRandomIntegerGeneratorImpl() 
 	}
 	
 //	@Test

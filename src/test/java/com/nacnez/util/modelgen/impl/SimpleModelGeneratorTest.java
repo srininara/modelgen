@@ -9,19 +9,27 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.nacnez.util.modelgen.ModelGenerator;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
+import com.nacnez.util.modelgen.factory.ModelGenModule;
 
 public class SimpleModelGeneratorTest {
 
 	// SimpleModelGenerator<Person> smg;
-	SimpleModelGenerator<SimpleMockObject> smg;
+	ModelGenerator<SimpleMockObject> smg;
 
 	@Before
 	public void setup() {
 		// creating the SUT/CUT
 		// smg = new SimpleModelGenerator<Person>();
+		Injector injector = Guice.createInjector(new ModelGenModule());
+		
+		//smg =injector.getInstance(ModelGenerator.class).;
 		smg = new SimpleModelGenerator<SimpleMockObject>();
+		injector.injectMembers(smg);
 
 	}
 

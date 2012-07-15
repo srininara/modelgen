@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -13,6 +13,7 @@ import net.vidageek.mirror.dsl.Mirror;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
+import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.FromList;

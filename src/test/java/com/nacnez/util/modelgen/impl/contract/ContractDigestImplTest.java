@@ -12,22 +12,27 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.Person;
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
+import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
 
 // This is an integration (and a classic style) test
 
 public class ContractDigestImplTest {
 
-	private ContractDigestImpl cd;
+	private ContractDigest cd;
 	
 	private Mirror mirror = new Mirror();
 	
 	@Before
 	public void setup() {
-		cd = new ContractDigestImpl();
+		Injector injector = Guice.createInjector(new ModelGenModule());
+		cd =injector.getInstance(ContractDigestImpl.class);
 	}
 	
 
@@ -63,10 +68,32 @@ public class ContractDigestImplTest {
 	public void digestingAndPopulatingASimpleClassWhichHasStringsAttributesOnly() {
 		SimpleMockObject smo = new SimpleMockObject();
 		cd.digest(SimpleMockGenerationContract.class).fill(smo);
+
 		assertNotNull(smo.getMockUnSizedString());
+
 		assertNotNull(smo.getMockSizedString());
 		assertEquals(32,smo.getMockSizedString().length());
+
 		assertNotNull(smo.getMockedSizedStringParam());
 		assertEquals(50,smo.getMockedSizedStringParam().length());
+
+		assertNotNull(smo.getMockAlphabeticString());
+		assertTrue(StringUtils.isAlpha(smo.getMockAlphabeticString()));
+
+		assertNotNull(smo.getMockAlphabeticSizedString());
+		assertTrue(StringUtils.isAlpha(smo.getMockAlphabeticSizedString()));
+		assertEquals(40,smo.getMockAlphabeticSizedString().length());
+
+		assertNotNull(smo.getMockAlphanumericString());
+		assertTrue(StringUtils.isAlphanumeric(smo.getMockAlphanumericString()));
+
+		assertNotNull(smo.getMockSizedAlphanumericString());
+		assertTrue(StringUtils.isAlphanumeric(smo.getMockSizedAlphanumericString()));
+		assertEquals(40,smo.getMockSizedAlphanumericString().length());
+
+		String[] fromList = {"Mock1","Mock2","Mock3"};
+		assertNotNull(smo.getMockStringFromList());
+		assertTrue(Arrays.binarySearch(fromList, smo.getMockStringFromList())>=0);
+		
 	}
 }

@@ -10,7 +10,10 @@ import net.vidageek.mirror.dsl.Mirror;
 
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
+import com.nacnez.util.modelgen.factory.ModelGenModule;
 
 public class GeneratorITTest {
 	
@@ -18,7 +21,8 @@ public class GeneratorITTest {
 
 	@Test
 	public void testGeneratorChain() {
-		Generator strGenFront = new BasicStringGenerator();
+		Injector injector = Guice.createInjector(new ModelGenModule());
+		Generator strGenFront = injector.getInstance(BasicStringGenerator.class);
 		Generator strGenBack = new SizedStringDecorator((StringGenerator)strGenFront);
 		strGenFront.setNext(strGenBack);
 		List<Annotation> constraints1 = getConstraints("setMockUnSizedString");

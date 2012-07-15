@@ -4,8 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -14,7 +16,6 @@ import java.util.List;
 
 import net.vidageek.mirror.dsl.Mirror;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.google.inject.Guice;
@@ -23,30 +24,32 @@ import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
+import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 
-public class AlphabeticStringGeneratorTest {
+public class ListOfStringGeneratorTest {
 
 	Mirror mirror = new Mirror();
 
 	@Test
 	public void testHappyCase() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
-		AlphabeticStringGenerator asg = spy(injector.getInstance(AlphabeticStringGenerator.class));
+		StringFromListGenerator sflg = spy(injector.getInstance(StringFromListGenerator.class));
 
-		List<Annotation> constraints = getConstraints("setMockAlphabeticString");
+		List<Annotation> constraints = getConstraints("setMockStringFromList");
 		assertEquals(1,constraints.size());
-		assertTrue(constraints.get(0).annotationType().equals(Alphabetic.class));
+		assertTrue(constraints.get(0).annotationType().equals(FromList.class));
 		Generator anotherGen = mock(Generator.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
-		when(asg.convert(constraints)).thenReturn(constraintList);
-		when(constraintList.contains(Alphabetic.class)).thenReturn(true);
-		String str = (String) asg.generate(constraints);
-		verify(asg).convert(constraints);
-		verify(constraintList).contains(Alphabetic.class);
-		verify(constraintList,never()).get(Alphabetic.class);
+		when(sflg.convert(constraints)).thenReturn(constraintList);
+		when(constraintList.contains(FromList.class)).thenReturn(true);
+		when(constraintList.get(FromList.class)).thenReturn(constraints.get(0));
+		String str = (String) sflg.generate(constraints);
+		verify(sflg).convert(constraints);
+		verify(constraintList).contains(FromList.class);
+		verify(constraintList).get(FromList.class);
 		assertNotNull(str);
-		assertTrue(StringUtils.isAlpha(str));
+		String[] fromList = {"Mock1","Mock2","Mock3"};
+		assertTrue(Arrays.asList(fromList).contains(str));
 		
 	}
 

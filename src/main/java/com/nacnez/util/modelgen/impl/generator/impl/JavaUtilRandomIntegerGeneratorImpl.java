@@ -1,6 +1,8 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.impl;
 
 import java.util.Random;
+
+import com.nacnez.util.modelgen.impl.generator.RandomIntegerGenerator;
 
 public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerator {  
 

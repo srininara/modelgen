@@ -3,6 +3,9 @@ package com.nacnez.util.modelgen.impl.generator;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
+import com.nacnez.util.modelgen.impl.generator.impl.ApacheCommonsRandomStringGeneratorImpl;
+import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
+
 public abstract class StringGenerator {
 
 	public StringGenerator() {

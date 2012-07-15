@@ -1,5 +1,6 @@
 package com.nacnez.util.modelgen.impl.generator;
 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -23,30 +24,31 @@ import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
+import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
-public class AlphabeticStringGeneratorTest {
+public class AlphanumericStringGeneratorTest {
 
 	Mirror mirror = new Mirror();
 
 	@Test
 	public void testHappyCase() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
-		AlphabeticStringGenerator asg = spy(injector.getInstance(AlphabeticStringGenerator.class));
+		AlphanumericStringGenerator asg = spy(injector.getInstance(AlphanumericStringGenerator.class));
 
-		List<Annotation> constraints = getConstraints("setMockAlphabeticString");
+		List<Annotation> constraints = getConstraints("setMockAlphanumericString");
 		assertEquals(1,constraints.size());
-		assertTrue(constraints.get(0).annotationType().equals(Alphabetic.class));
+		assertTrue(constraints.get(0).annotationType().equals(Alphanumeric.class));
 		Generator anotherGen = mock(Generator.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(asg.convert(constraints)).thenReturn(constraintList);
-		when(constraintList.contains(Alphabetic.class)).thenReturn(true);
+		when(constraintList.contains(Alphanumeric.class)).thenReturn(true);
 		String str = (String) asg.generate(constraints);
 		verify(asg).convert(constraints);
-		verify(constraintList).contains(Alphabetic.class);
-		verify(constraintList,never()).get(Alphabetic.class);
+		verify(constraintList).contains(Alphanumeric.class);
+		verify(constraintList,never()).get(Alphanumeric.class);
 		assertNotNull(str);
-		assertTrue(StringUtils.isAlpha(str));
+		assertTrue(StringUtils.isAlphanumeric(str));
 		
 	}
 
