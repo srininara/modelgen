@@ -76,20 +76,17 @@ public class SimpleModelGeneratorTest {
 
 	@Test
 	public void modelGeneratorShouldBeAbleToCreateAnEmptyModelWhenContractIsProvided() {
-		Collection<SimpleMockObject> c = smg.make(1)
-				.instancesOf(SimpleMockObject.class)
-				.with(SimpleMockGenerationContract.class)
-				.andProvideAsCollection();
+		Collection<SimpleMockObject> c = smg.make(1).instancesWith(SimpleMockGenerationContract.class).andProvideAsCollection();
 		assertEquals(1, c.size());
 		SimpleMockObject smo = c.iterator().next();
 		assertFilledSimpleMockObject(smo);
 	}
 
+
 	@Test
 	public void modelGeneratorShouldBeAbleToCreateAsManyEmptyModelsAreRequestedWhenContractIsProvided() {
 		Collection<SimpleMockObject> c = smg.make(10)
-				.instancesOf(SimpleMockObject.class)
-				.with(SimpleMockGenerationContract.class)
+				.instancesWith(SimpleMockGenerationContract.class)
 				.andProvideAsCollection();
 		assertEquals(10, c.size());
 		for (SimpleMockObject smo : c) {

@@ -6,17 +6,14 @@ import java.util.List;
 import com.nacnez.util.modelgen.impl.generator.impl.ApacheCommonsRandomStringGeneratorImpl;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 
-public abstract class StringGenerator {
+public abstract class StringGenerator extends BaseGenerator {
+	
+	public static final int DEFAULT_LENGTH = 32;
 
 	public StringGenerator() {
 		super();
 	}
 	
-	protected ConstraintList convert(List<Annotation> constraints) {
-		return new ConstraintList(constraints);
-	}
-
-
 	public final Object generate(List<Annotation> constraints) {
 		ConstraintList list = convert(constraints);
 		if (applicable(list)) {
@@ -29,22 +26,10 @@ public abstract class StringGenerator {
 		return null;
 	}
 	
-	protected Generator next;
-	
-	public void setNext(Generator next) {
-		this.next = next;
-	}
-	
 	protected abstract Object doGenerate(ConstraintList constraintList, int size);
 	
 	protected int getLength(ConstraintList constraintList) {
-		return ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH;
+		return DEFAULT_LENGTH;
 	}
 	
-	protected abstract boolean applicable(ConstraintList constraintList);
-	
-	
-	
-
-
 }

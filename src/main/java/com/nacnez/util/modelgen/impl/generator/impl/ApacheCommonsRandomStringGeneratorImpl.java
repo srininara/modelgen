@@ -1,22 +1,15 @@
 package com.nacnez.util.modelgen.impl.generator.impl;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import static com.nacnez.util.modelgen.impl.generator.StringGenerator.DEFAULT_LENGTH;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import com.google.inject.Inject;
 import com.nacnez.util.modelgen.impl.generator.RandomStringGenerator;
 
 // Support Ascii characters and their subsets
 
-public class ApacheCommonsRandomStringGeneratorImpl implements RandomStringGenerator {
-	public static int DEFAULT_LENGTH = 32;
-
-//	private RandomIntegerGenerator rig;
-	
-//	@Inject
-//	public ApacheCommonsRandomStringGeneratorImpl(
-//			RandomIntegerGenerator rig) {
-//		this.rig = rig;
-//	}
+public class ApacheCommonsRandomStringGeneratorImpl implements
+		RandomStringGenerator {
 
 	public String generate() {
 		return generate(DEFAULT_LENGTH);

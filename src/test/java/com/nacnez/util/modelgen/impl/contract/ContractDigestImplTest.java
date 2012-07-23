@@ -2,7 +2,8 @@ package com.nacnez.util.modelgen.impl.contract;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
@@ -14,12 +15,13 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.nacnez.util.modelgen.exampleModels.Person;
-import com.nacnez.util.modelgen.exampleModels.PersonContract;
+import com.nacnez.util.modelgen.exampleModels.CompoundMockObject;
+import com.nacnez.util.modelgen.exampleModels.CompoundMockObjectContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
-import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
 
 // This is an integration (and a classic style) test
 
@@ -66,9 +68,51 @@ public class ContractDigestImplTest {
 	
 	@Test
 	public void digestingAndPopulatingASimpleClassWhichHasStringsAttributesOnly() {
-		SimpleMockObject smo = new SimpleMockObject();
-		cd.digest(SimpleMockGenerationContract.class).fill(smo);
+		SimpleMockObject smo = (SimpleMockObject) cd.digest(SimpleMockGenerationContract.class).make();
+		assertSmo(smo);
+	}
 
+	@Test
+	public void digestingAndPopulatingASimpleClassWhichHasIntegerAttributesOnly() {
+		SimpleIntegerGenerationMockObject sigmo = (SimpleIntegerGenerationMockObject) cd.digest(SimpleIntegerGenerationMockContract.class).make();
+		assertSigmo(sigmo);
+	}
+
+	@Test
+	public void digestingAndPopulatingACompoundClassWhichHasOtherContracts() {
+		CompoundMockObject cmo = (CompoundMockObject) cd.digest(CompoundMockObjectContract.class).make();
+		
+		assertNotNull(cmo.getCompoundId());
+		assertTrue(StringUtils.isAlphanumeric(cmo.getCompoundId()));
+
+		assertNotNull(cmo.getSigmo());
+		assertSigmo(cmo.getSigmo());
+		
+		assertNotNull(cmo.getSmo());
+		assertSmo(cmo.getSmo());
+	}
+
+	private void assertSigmo(SimpleIntegerGenerationMockObject sigmo) {
+		assertNotNull(sigmo.getMockNoLimitInteger());
+		assertTrue(sigmo.getMockNoLimitInteger()>=0);
+		
+		assertNotNull(sigmo.getMockDefaultLimitInteger());
+		assertTrue(sigmo.getMockDefaultLimitInteger()>Integer.MIN_VALUE && sigmo.getMockDefaultLimitInteger()<Integer.MAX_VALUE);
+		
+		assertNotNull(sigmo.getMockHighLimitInteger());
+		assertNotNull(sigmo.getMockHighLimitInteger()<=1000000);
+		
+		assertNotNull(sigmo.getMockLowLimitInteger());
+		assertNotNull(sigmo.getMockLowLimitInteger()>=1000001);
+		
+		assertNotNull(sigmo.getMockBothLimitInteger());
+		assertTrue(sigmo.getMockBothLimitInteger()>=10000 && sigmo.getMockDefaultLimitInteger()<=20000);
+		
+		assertNotNull(sigmo.getMockNegativeInteger());
+		assertTrue(sigmo.getMockNegativeInteger()<=-1);
+	}
+
+	private void assertSmo(SimpleMockObject smo) {
 		assertNotNull(smo.getMockUnSizedString());
 
 		assertNotNull(smo.getMockSizedString());
@@ -94,6 +138,5 @@ public class ContractDigestImplTest {
 		String[] fromList = {"Mock1","Mock2","Mock3"};
 		assertNotNull(smo.getMockStringFromList());
 		assertTrue(Arrays.binarySearch(fromList, smo.getMockStringFromList())>=0);
-		
 	}
 }

@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
 import java.util.List;
 
 import net.vidageek.mirror.dsl.Mirror;
@@ -16,11 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
-import com.nacnez.util.modelgen.impl.generator.impl.ApacheCommonsRandomStringGeneratorImpl;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
-import com.nacnez.util.modelgen.impl.generator.rules.FromList;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
+import com.nacnez.util.modelgen.impl.generator.StringGenerator;
 
 public class RandomStringGeneratorTest {
 
@@ -90,10 +85,10 @@ public class RandomStringGeneratorTest {
 	public void generateRandomStringOfDefaultLength() {
 		String firstOutput = rsg.generate();
 		assertNotNull(firstOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		String secondOutput = rsg.generate();
 		assertNotNull(secondOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertFalse(firstOutput.equals(secondOutput));
 	}
 	
@@ -113,11 +108,11 @@ public class RandomStringGeneratorTest {
 	public void generateRandomAlphaNumericStringOfDefaultLength() {
 		String firstOutput = rsg.generateAlphaNumeric();
 		assertNotNull(firstOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlphanumeric(firstOutput));
 		String secondOutput = rsg.generateAlphaNumeric();
 		assertNotNull(secondOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlphanumeric(firstOutput));
 		assertFalse(firstOutput.equals(secondOutput));
 	}
@@ -138,11 +133,11 @@ public class RandomStringGeneratorTest {
 	public void generateRandomAlphabeticStringOfDefaultLength() {
 		String firstOutput = rsg.generateAlphabetic();
 		assertNotNull(firstOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlpha(firstOutput));
 		String secondOutput = rsg.generateAlphabetic();
 		assertNotNull(secondOutput);
-		assertEquals(ApacheCommonsRandomStringGeneratorImpl.DEFAULT_LENGTH,firstOutput.length());
+		assertEquals(StringGenerator.DEFAULT_LENGTH,firstOutput.length());
 		assertTrue(StringUtils.isAlpha(firstOutput));
 		assertFalse(firstOutput.equals(secondOutput));
 	}

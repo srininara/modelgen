@@ -1,7 +1,5 @@
 package com.nacnez.util.modelgen.exampleModels;
 
-import com.nacnez.util.modelgen.impl.generator.rules.Limit;
-import com.nacnez.util.modelgen.impl.generator.rules.Negative;
 
 
 public class Person {

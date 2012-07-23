@@ -28,12 +28,6 @@ public class BasicStringGeneratorTest {
 		assertTrue(str.length() > 0);
 	}
 	
-	
-/*	@Test
-	public void testBootstrappingWithPico() {
-		MutablePicoContainer pico = new DefaultPicoContainer(new AnnotatedFieldInjection()); 
-	}
-*/
 	@Test
 	public void evenIfConstraintsAreSentBasicGeneratorWillAlwaysGenerateAValueIrrespectiveOfWhetherTheNextGeneratorIsPresent() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
@@ -49,16 +43,4 @@ public class BasicStringGeneratorTest {
 		assertFalse(anotherValue.equals(output));
 		verify(anotherGen, never()).generate(constraints);
 	}
-
-	// @Test
-	// public void
-	// ifConstraintsAreSentPassedGeneratorWillReturnNullIfThereIsNoNextGeneratorPresent()
-	// {
-	// BasicStringGenerator bsg = new BasicStringGenerator();
-	// List<Annotation> constraints = mock(List.class);
-	// when(constraints.size()).thenReturn(1);
-	// String output = (String)bsg.generate(constraints);
-	// assertNull(output);
-	// }
-
 }

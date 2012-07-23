@@ -1,7 +1,6 @@
 package com.nacnez.util.modelgen.exampleModels;
 
 import com.nacnez.util.modelgen.impl.generator.rules.Limit;
-import com.nacnez.util.modelgen.impl.generator.rules.Negative;
 
 public interface WrongContract {
 
@@ -14,16 +13,16 @@ public interface WrongContract {
 	@Limit(highLimit=-1000000, lowLimit = 0)
 	void setYetAnotherId(Integer anotherId);
 	
-	@Negative
+//	@Negative
 	@Limit(highLimit=-100, lowLimit = -100000)
 	void setAnotherLoanAmount(Integer anotherLoanAmount);
 	
 	
-	@Negative
+//	@Negative
 	@Limit(highLimit=0, lowLimit = 100)
 	void setAnotherAmount(Integer anotherAmount);
 	
-	@Negative
-	@Limit(highLimit=100, lowLimit = 0)
-	void setYetAnotherAmount(Integer anotherAmount);
+//	@Negative
+//	@Limit(highLimit=100, lowLimit = 0)
+//	void setYetAnotherAmount(Integer anotherAmount);
 }

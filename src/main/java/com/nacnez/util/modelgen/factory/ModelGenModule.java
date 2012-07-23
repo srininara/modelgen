@@ -11,7 +11,10 @@ import com.nacnez.util.modelgen.impl.contract.ContractDigest;
 import com.nacnez.util.modelgen.impl.contract.ContractDigestImpl;
 import com.nacnez.util.modelgen.impl.generator.AlphabeticStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.AlphanumericStringGenerator;
+import com.nacnez.util.modelgen.impl.generator.BasicIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
+import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
+import com.nacnez.util.modelgen.impl.generator.LimitBoundIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.RandomIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.RandomStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.StringFromListGenerator;
@@ -36,6 +39,9 @@ public class ModelGenModule extends AbstractModule {
 		.to(AlphanumericStringGenerator.class);
 		bind(StringGenerator.class).annotatedWith(Names.named("StringFromList"))
 		.to(StringFromListGenerator.class);
+		
+		bind(IntegerGenerator.class).annotatedWith(Names.named("Basic")).to(BasicIntegerGenerator.class);
+		bind(IntegerGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundIntegerGenerator.class);
 
 		bind(TypeToGeneratorMapping.class).annotatedWith(Names.named("typeGenMap")).toProvider(TypeToGeneratorMappingProvider.class);
 		bind(Mirror.class).in(Singleton.class);

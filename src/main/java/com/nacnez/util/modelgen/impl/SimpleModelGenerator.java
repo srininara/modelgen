@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import com.nacnez.util.modelgen.GenerationContract;
 import com.nacnez.util.modelgen.ModelGenerator;
 import com.nacnez.util.modelgen.impl.contract.ContractDigest;
-import com.nacnez.util.modelgen.impl.contract.ContractDigestImpl;
 
 public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
@@ -27,11 +26,13 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 	}
 
 	public ModelGenerator<T> instancesOf(Class<T> c) {
+		if (contract!=null) throw new IllegalStateException("Contract already provided hence this setup is not possible");
 		this.prototypeModelType = c;
 		return this;
 	}
 
-	public ModelGenerator<T> with(Class<? extends GenerationContract> contract) {
+	public ModelGenerator<T> instancesWith(Class<? extends GenerationContract> contract) {
+		if (prototypeModelType!=null) throw new IllegalStateException("Prototype Model type already provided hence this setup is not possible");
 		this.contract = contract;
 		return this;
 	}
@@ -44,10 +45,13 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 	public Collection<T> andProvideAsCollection() {
 		Collection<T> outputCollection = new HashSet<T>();
 		for (int i=0;i<this.numberOfModelObjs;i++) {
+			T model = null;
 			try {
-				T model = this.prototypeModelType.newInstance();
+				if (prototypeModelType!=null) {
+					model = this.prototypeModelType.newInstance();
+				}
 				if (contract!=null) {
-					digest.digest(contract).fill(model);
+					model = (T) digest.digest(contract).make();
 				}
 				outputCollection.add(model);
 			} catch (Exception e) {

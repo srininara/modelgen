@@ -7,6 +7,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import com.nacnez.util.modelgen.impl.generator.Generator;
+import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.SizedStringDecorator;
 import com.nacnez.util.modelgen.impl.generator.StringGenerator;
 import com.nacnez.util.modelgen.impl.generator.model.TypeToGeneratorMapping;
@@ -24,11 +25,24 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 
 	@Inject @Named("StringFromList")
 	StringGenerator sflg;
+	
+	@Inject @Named("Basic")
+	IntegerGenerator big;
+	
+	@Inject @Named("Limited")
+	IntegerGenerator lbig;
 
 	public TypeToGeneratorMapping get() {
 		Map<Class, Generator> typeToGeneratorMapping = new HashMap<Class, Generator>();
 		typeToGeneratorMapping.put(String.class, getStringGenerator());
+		typeToGeneratorMapping.put(Integer.class,getIntegerGenerator());
 		return new TypeToGeneratorMapping(typeToGeneratorMapping);
+	}
+
+
+	private Generator getIntegerGenerator() {
+		lbig.setNext((Generator)big);
+		return (Generator)lbig;
 	}
 
 

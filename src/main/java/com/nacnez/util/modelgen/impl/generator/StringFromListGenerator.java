@@ -13,7 +13,7 @@ public class StringFromListGenerator extends StringGenerator implements Generato
 	protected Object doGenerate(ConstraintList constraintList, int size) {
 		FromList constraint = (FromList) constraintList.get(FromList.class);
 		String[] fromList = constraint.fromList();
-		int index = ((Integer)rig.generate(fromList.length));
+		int index = ((Integer)rig.generate(fromList.length-1));
 		return fromList[index];
 	}
 

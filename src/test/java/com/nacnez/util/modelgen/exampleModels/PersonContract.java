@@ -5,7 +5,6 @@ import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
 import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 import com.nacnez.util.modelgen.impl.generator.rules.Limit;
-import com.nacnez.util.modelgen.impl.generator.rules.Negative;
 import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public interface PersonContract extends GenerationContract {
@@ -27,10 +26,9 @@ public interface PersonContract extends GenerationContract {
 	@Limit(highLimit=1000000, lowLimit = 0)
 	void setId(Integer id);
 	
-	@Negative
+	@Limit(highLimit=0)
 	void setCreditAmount(Integer creditAmount);
 	
-	@Negative
 	@Limit(lowLimit=-1000000, highLimit = 0)
 	void setLoanAmount(Integer id);
 	
