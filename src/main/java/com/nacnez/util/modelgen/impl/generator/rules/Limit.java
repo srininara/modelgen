@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD,ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Limit {
-	int lowLimit();
-	int highLimit();
+	int lowLimit() default Integer.MIN_VALUE + 1;
+	int highLimit() default Integer.MAX_VALUE-1;
 }
