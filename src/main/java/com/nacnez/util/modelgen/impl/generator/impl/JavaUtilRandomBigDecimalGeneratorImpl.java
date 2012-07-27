@@ -3,8 +3,9 @@ package com.nacnez.util.modelgen.impl.generator.impl;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Random;
+import com.nacnez.util.modelgen.impl.generator.RandomBigDecimalGenerator;
 
-public class JavaUtilRandomBigDecimalGeneratorImpl {
+public class JavaUtilRandomBigDecimalGeneratorImpl implements RandomBigDecimalGenerator {
 	
 	public static final int DEFAULT_SCALE = 2;
 	

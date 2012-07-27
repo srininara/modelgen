@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.lang.annotation.Annotation;
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -16,27 +17,27 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.factory.ModelGenModule;
 
-public class BasicIntegerGeneratorTest {
+public class BasicBigDecimalGeneratorTest {
 
 	@Test
 	public void testBasicGeneration() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
-		BasicIntegerGenerator bsg = injector.getInstance(BasicIntegerGenerator.class);
-		Integer num = (Integer) bsg.generate((List<Annotation>)null);
+		BasicBigDecimalGenerator bbdg = injector.getInstance(BasicBigDecimalGenerator.class);
+		BigDecimal num = (BigDecimal) bbdg.generate((List<Annotation>)null);
 		assertNotNull(num);
 	}
-	
+
 	@Test
 	public void evenIfConstraintsAreSentBasicGeneratorWillAlwaysGenerateAValueIrrespectiveOfWhetherTheNextGeneratorIsPresent() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
-		BasicIntegerGenerator big = injector.getInstance(BasicIntegerGenerator.class);
+		BasicBigDecimalGenerator big = injector.getInstance(BasicBigDecimalGenerator.class);
 		Generator anotherGen = mock(Generator.class);
 		List<Annotation> constraints = mock(List.class);
 		when(constraints.size()).thenReturn(1);
 		Integer anotherValue = 123;
 		when(anotherGen.generate(constraints)).thenReturn(anotherValue);
 		big.setNext(anotherGen);
-		Integer output = (Integer) big.generate(constraints);
+		BigDecimal output = (BigDecimal) big.generate(constraints);
 		assertNotNull(output);
 		assertFalse(anotherValue.equals(output));
 		verify(anotherGen, never()).generate(constraints);

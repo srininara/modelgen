@@ -1,11 +1,13 @@
 package com.nacnez.util.modelgen.factory;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
+import com.nacnez.util.modelgen.impl.generator.BigDecimalGenerator;
 import com.nacnez.util.modelgen.impl.generator.Generator;
 import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.SizedStringDecorator;
@@ -31,12 +33,26 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 	
 	@Inject @Named("Limited")
 	IntegerGenerator lbig;
+	
+	@Inject @Named("Basic")
+	BigDecimalGenerator bbdg;
+	
+	@Inject @Named("Limited")
+	BigDecimalGenerator lbbdg;
+	
 
 	public TypeToGeneratorMapping get() {
 		Map<Class, Generator> typeToGeneratorMapping = new HashMap<Class, Generator>();
 		typeToGeneratorMapping.put(String.class, getStringGenerator());
 		typeToGeneratorMapping.put(Integer.class,getIntegerGenerator());
+		typeToGeneratorMapping.put(BigDecimal.class,getBigDecimalGenerator());
 		return new TypeToGeneratorMapping(typeToGeneratorMapping);
+	}
+
+
+	private Generator getBigDecimalGenerator() {
+		lbbdg.setNext((Generator)bbdg);
+		return (Generator)lbbdg;
 	}
 
 

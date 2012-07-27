@@ -1,10 +1,10 @@
 package com.nacnez.util.modelgen.impl.contract;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import net.vidageek.mirror.dsl.Mirror;
@@ -17,6 +17,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.CompoundMockObject;
 import com.nacnez.util.modelgen.exampleModels.CompoundMockObjectContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
@@ -28,115 +30,146 @@ import com.nacnez.util.modelgen.factory.ModelGenModule;
 public class ContractDigestImplTest {
 
 	private ContractDigest cd;
-	
+
 	private Mirror mirror = new Mirror();
-	
+
 	@Before
 	public void setup() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
-		cd =injector.getInstance(ContractDigestImpl.class);
+		cd = injector.getInstance(ContractDigestImpl.class);
 	}
-	
 
-	// Have to reinstate this once I finish refactoring the rest of string generation and full integer generation
-//	@Test
-//	public void digestingAndPopulatingASimpleClassWhichHasStringAndIntegerAttributes() {
-//		
-//		Person p = new Person();
-//		cd.digest(PersonContract.class).fill(p);
-//		
-//		assertEquals(32,p.getFirstName().length());
-//		assertTrue(StringUtils.isAlpha(p.getFirstName()));
-//		
-//		assertEquals(15,p.getCreditCardNumber().length());
-//		
-//		assertEquals(15,p.getPAN().length());
-//		assertTrue(StringUtils.isAlphanumeric(p.getPAN()));
-//		
-//		
-//		String[] fromList = {"Single","Married","Divorced"};
-//		assertTrue(Arrays.asList(fromList).contains(p.getMaritalStatus()));
-//
-//		assertTrue(p.getId()<=1000000);
-//		assertTrue(p.getId()>0);
-//		
-//		assertTrue(p.getCreditAmount()<0);
-//		
-//		assertTrue(p.getLoanAmount()<0);
-//		assertTrue(p.getLoanAmount()>= -1000000);
-//	}
-	
+	// Have to reinstate this once I finish refactoring the rest of string
+	// generation and full integer generation
+	// @Test
+	// public void
+	// digestingAndPopulatingASimpleClassWhichHasStringAndIntegerAttributes() {
+	//
+	// Person p = new Person();
+	// cd.digest(PersonContract.class).fill(p);
+	//
+	// assertEquals(32,p.getFirstName().length());
+	// assertTrue(StringUtils.isAlpha(p.getFirstName()));
+	//
+	// assertEquals(15,p.getCreditCardNumber().length());
+	//
+	// assertEquals(15,p.getPAN().length());
+	// assertTrue(StringUtils.isAlphanumeric(p.getPAN()));
+	//
+	//
+	// String[] fromList = {"Single","Married","Divorced"};
+	// assertTrue(Arrays.asList(fromList).contains(p.getMaritalStatus()));
+	//
+	// assertTrue(p.getId()<=1000000);
+	// assertTrue(p.getId()>0);
+	//
+	// assertTrue(p.getCreditAmount()<0);
+	//
+	// assertTrue(p.getLoanAmount()<0);
+	// assertTrue(p.getLoanAmount()>= -1000000);
+	// }
+
 	@Test
 	public void digestingAndPopulatingASimpleClassWhichHasStringsAttributesOnly() {
-		SimpleMockObject smo = (SimpleMockObject) cd.digest(SimpleMockGenerationContract.class).make();
+		SimpleMockObject smo = (SimpleMockObject) cd.digest(
+				SimpleMockGenerationContract.class).make();
 		assertSmo(smo);
 	}
 
 	@Test
 	public void digestingAndPopulatingASimpleClassWhichHasIntegerAttributesOnly() {
-		SimpleIntegerGenerationMockObject sigmo = (SimpleIntegerGenerationMockObject) cd.digest(SimpleIntegerGenerationMockContract.class).make();
+		SimpleIntegerGenerationMockObject sigmo = (SimpleIntegerGenerationMockObject) cd
+				.digest(SimpleIntegerGenerationMockContract.class).make();
 		assertSigmo(sigmo);
 	}
 
 	@Test
-	public void digestingAndPopulatingACompoundClassWhichHasOtherContracts() {
-		CompoundMockObject cmo = (CompoundMockObject) cd.digest(CompoundMockObjectContract.class).make();
+	public void digestingAndPopulatingASimpleClassWhichHasBigDecimalAttributesOnly() {
+		SimpleBigDecimalGenerationMockObject sbdgmo = (SimpleBigDecimalGenerationMockObject) cd
+				.digest(SimpleBigDecimalGenerationMockContract.class).make();
+		assertSbdgmo(sbdgmo);
+	}
+
+	private void assertSbdgmo(SimpleBigDecimalGenerationMockObject sbdgmo) {
+		assertBDoutput(sbdgmo.getMockBothLimitBigDecimal(),"20000002.22","40000002.43",2);
+		assertBDoutput(sbdgmo.getMockNegativeBigDecimal(),"-20000002.22","-1.12",2);
+		assertBDoutput(sbdgmo.getMockDiffScaleBigDecimal(),"10000.123","40000002.43",3);
 		
+
+	}
+
+	private void assertBDoutput(BigDecimal bigDoutput, String lowLimit,
+			String highLimit, int scale) {
+		assertNotNull(bigDoutput);
+
+		assertTrue(bigDoutput.compareTo(new BigDecimal(lowLimit)) >= 0);
+		assertTrue(bigDoutput.compareTo(new BigDecimal(highLimit)) <= 0);
+		assertTrue(bigDoutput.scale() == scale);
+	}
+
+	@Test
+	public void digestingAndPopulatingACompoundClassWhichHasOtherContracts() {
+		CompoundMockObject cmo = (CompoundMockObject) cd.digest(
+				CompoundMockObjectContract.class).make();
+
 		assertNotNull(cmo.getCompoundId());
 		assertTrue(StringUtils.isAlphanumeric(cmo.getCompoundId()));
 
 		assertNotNull(cmo.getSigmo());
 		assertSigmo(cmo.getSigmo());
-		
+
 		assertNotNull(cmo.getSmo());
 		assertSmo(cmo.getSmo());
 	}
 
 	private void assertSigmo(SimpleIntegerGenerationMockObject sigmo) {
 		assertNotNull(sigmo.getMockNoLimitInteger());
-		assertTrue(sigmo.getMockNoLimitInteger()>=0);
-		
+		assertTrue(sigmo.getMockNoLimitInteger() >= 0);
+
 		assertNotNull(sigmo.getMockDefaultLimitInteger());
-		assertTrue(sigmo.getMockDefaultLimitInteger()>Integer.MIN_VALUE && sigmo.getMockDefaultLimitInteger()<Integer.MAX_VALUE);
-		
+		assertTrue(sigmo.getMockDefaultLimitInteger() > Integer.MIN_VALUE
+				&& sigmo.getMockDefaultLimitInteger() < Integer.MAX_VALUE);
+
 		assertNotNull(sigmo.getMockHighLimitInteger());
-		assertNotNull(sigmo.getMockHighLimitInteger()<=1000000);
-		
+		assertNotNull(sigmo.getMockHighLimitInteger() <= 1000000);
+
 		assertNotNull(sigmo.getMockLowLimitInteger());
-		assertNotNull(sigmo.getMockLowLimitInteger()>=1000001);
-		
+		assertNotNull(sigmo.getMockLowLimitInteger() >= 1000001);
+
 		assertNotNull(sigmo.getMockBothLimitInteger());
-		assertTrue(sigmo.getMockBothLimitInteger()>=10000 && sigmo.getMockDefaultLimitInteger()<=20000);
-		
+		assertTrue(sigmo.getMockBothLimitInteger() >= 10000
+				&& sigmo.getMockDefaultLimitInteger() <= 20000);
+
 		assertNotNull(sigmo.getMockNegativeInteger());
-		assertTrue(sigmo.getMockNegativeInteger()<=-1);
+		assertTrue(sigmo.getMockNegativeInteger() <= -1);
 	}
 
 	private void assertSmo(SimpleMockObject smo) {
 		assertNotNull(smo.getMockUnSizedString());
 
 		assertNotNull(smo.getMockSizedString());
-		assertEquals(32,smo.getMockSizedString().length());
+		assertEquals(32, smo.getMockSizedString().length());
 
 		assertNotNull(smo.getMockedSizedStringParam());
-		assertEquals(50,smo.getMockedSizedStringParam().length());
+		assertEquals(50, smo.getMockedSizedStringParam().length());
 
 		assertNotNull(smo.getMockAlphabeticString());
 		assertTrue(StringUtils.isAlpha(smo.getMockAlphabeticString()));
 
 		assertNotNull(smo.getMockAlphabeticSizedString());
 		assertTrue(StringUtils.isAlpha(smo.getMockAlphabeticSizedString()));
-		assertEquals(40,smo.getMockAlphabeticSizedString().length());
+		assertEquals(40, smo.getMockAlphabeticSizedString().length());
 
 		assertNotNull(smo.getMockAlphanumericString());
 		assertTrue(StringUtils.isAlphanumeric(smo.getMockAlphanumericString()));
 
 		assertNotNull(smo.getMockSizedAlphanumericString());
-		assertTrue(StringUtils.isAlphanumeric(smo.getMockSizedAlphanumericString()));
-		assertEquals(40,smo.getMockSizedAlphanumericString().length());
+		assertTrue(StringUtils.isAlphanumeric(smo
+				.getMockSizedAlphanumericString()));
+		assertEquals(40, smo.getMockSizedAlphanumericString().length());
 
-		String[] fromList = {"Mock1","Mock2","Mock3"};
+		String[] fromList = { "Mock1", "Mock2", "Mock3" };
 		assertNotNull(smo.getMockStringFromList());
-		assertTrue(Arrays.binarySearch(fromList, smo.getMockStringFromList())>=0);
+		assertTrue(Arrays.binarySearch(fromList, smo.getMockStringFromList()) >= 0);
 	}
 }

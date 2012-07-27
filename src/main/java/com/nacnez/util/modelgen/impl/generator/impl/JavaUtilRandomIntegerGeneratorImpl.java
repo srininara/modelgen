@@ -18,7 +18,8 @@ public class JavaUtilRandomIntegerGeneratorImpl implements RandomIntegerGenerato
 
 	public Integer generate(int lowLimit, int highLimit) {
 		int range = Math.abs(highLimit - lowLimit);
-		int m = random.nextInt( range + 1 ) + lowLimit;
+		int r = random.nextInt( range + 1 );
+		int m =  r + lowLimit;
 		return m;
 	}
 

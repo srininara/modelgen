@@ -57,6 +57,11 @@ public class RandomIntegerGeneratorTest {
 		lowLimit = 70;
 		output = rig.generate(lowLimit, highLimit);
 		assertTrue(output>=lowLimit && output<=highLimit);
+		
+		highLimit = -1;
+		lowLimit = -100;
+		output = rig.generate(lowLimit, highLimit);
+		assertTrue(output>=lowLimit && output<=highLimit);
 
 	}
 
@@ -75,6 +80,8 @@ public class RandomIntegerGeneratorTest {
 
 		assertEquals(genCount, generatedNumbers.size());
 	}
+	
+	
 
 
 	private List<Annotation> getConstraints(Class contract, String methodName) {

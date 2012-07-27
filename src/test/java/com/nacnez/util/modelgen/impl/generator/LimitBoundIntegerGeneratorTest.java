@@ -33,7 +33,6 @@ public class LimitBoundIntegerGeneratorTest {
 
 	Mirror mirror = new Mirror();
 	
-	
 	private void testGeneration(String methodName) {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 
@@ -98,6 +97,5 @@ public class LimitBoundIntegerGeneratorTest {
 		}
 		return constraints;
 	}
-	
 
 }
