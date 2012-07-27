@@ -6,10 +6,13 @@ import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 
 import net.vidageek.mirror.dsl.Mirror;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +22,8 @@ import com.nacnez.util.modelgen.exampleModels.CompoundMockObject;
 import com.nacnez.util.modelgen.exampleModels.CompoundMockObjectContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockObject;
+import com.nacnez.util.modelgen.exampleModels.SimpleDateGenerationMockContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleDateGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
@@ -89,12 +94,37 @@ public class ContractDigestImplTest {
 				.digest(SimpleBigDecimalGenerationMockContract.class).make();
 		assertSbdgmo(sbdgmo);
 	}
+	
+	@Test
+	public void digestingAndPopulatingASimpleClassWhichHasDateAttributesOnly() {
+		SimpleDateGenerationMockObject sdgmo = (SimpleDateGenerationMockObject) cd.digest(SimpleDateGenerationMockContract.class).make();
+		assertSdgmo(sdgmo);
+	}
+
+	private void assertSdgmo(SimpleDateGenerationMockObject sdgmo) {
+		assertDateOutput(sdgmo.getMockBothLimitDate(),"15-01-2010","15-01-2012","dd-mm-yyyy");
+		assertDateOutput(sdgmo.getMockDiffFormatDate(),"01-Jan-2010","01-Jan-2012","dd-MMM-yyyy");
+
+	}
+	
+	private void assertDateOutput(Date dateOutput,String lowLimitS,String highLimitS, String format) {
+		DateTimeFormatter formatter = DateTimeFormat.forPattern(format);
+		Date lowLimit = formatter.parseDateTime(lowLimitS).toDateMidnight().toDate();
+		
+		Date highLimit = formatter.parseDateTime(highLimitS).toDateMidnight().toDate();
+		
+		assertNotNull(dateOutput);
+		
+		assertTrue(dateOutput.compareTo(lowLimit)>=0);
+		assertTrue(dateOutput.compareTo(highLimit)<=0);
+		
+
+	}
 
 	private void assertSbdgmo(SimpleBigDecimalGenerationMockObject sbdgmo) {
 		assertBDoutput(sbdgmo.getMockBothLimitBigDecimal(),"20000002.22","40000002.43",2);
 		assertBDoutput(sbdgmo.getMockNegativeBigDecimal(),"-20000002.22","-1.12",2);
 		assertBDoutput(sbdgmo.getMockDiffScaleBigDecimal(),"10000.123","40000002.43",3);
-		
 
 	}
 

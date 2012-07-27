@@ -27,7 +27,13 @@ public class JodaBasedRandomDateGeneratorImpl implements RandomDateGenerator {
 		return generate(internalMinDate,internalMaxDate);
 	}
 	
-	private Date generate(DateMidnight internalMinDate, DateMidnight internalMaxDate) {
+	public Date generate() {
+		DateMidnight internalMinDate = DateMidnight.parse("2000-01-01");
+		DateMidnight internalMaxDate = DateMidnight.parse("2012-01-01");
+		return generate(internalMinDate,internalMaxDate);
+	}
+
+	public Date generate(DateMidnight internalMinDate, DateMidnight internalMaxDate) {
 		long internalMinTime = internalMinDate.getMillis();
 		long internalMaxTime = internalMaxDate.getMillis();
 		long randomTime = generate(internalMinTime,internalMaxTime);
@@ -43,12 +49,5 @@ public class JodaBasedRandomDateGeneratorImpl implements RandomDateGenerator {
 		long m = randBD.longValue();
 		return m;
 	}
-
-	public Date generate() {
-		DateMidnight internalMinDate = DateMidnight.parse("2000-01-01");
-		DateMidnight internalMaxDate = DateMidnight.parse("2012-01-01");
-		return generate(internalMinDate,internalMaxDate);
-	}
-
 
 }

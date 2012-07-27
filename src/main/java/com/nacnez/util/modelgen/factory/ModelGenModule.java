@@ -12,11 +12,14 @@ import com.nacnez.util.modelgen.impl.contract.ContractDigestImpl;
 import com.nacnez.util.modelgen.impl.generator.AlphabeticStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.AlphanumericStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicBigDecimalGenerator;
+import com.nacnez.util.modelgen.impl.generator.BasicDateGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
 import com.nacnez.util.modelgen.impl.generator.BigDecimalGenerator;
+import com.nacnez.util.modelgen.impl.generator.DateGenerator;
 import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundBigDecimalGenerator;
+import com.nacnez.util.modelgen.impl.generator.LimitBoundDateGenerator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.RandomBigDecimalGenerator;
 import com.nacnez.util.modelgen.impl.generator.RandomDateGenerator;
@@ -64,6 +67,8 @@ public class ModelGenModule extends AbstractModule {
 
 		bind(RandomDateGenerator.class).to(
 				JodaBasedRandomDateGeneratorImpl.class);
+		bind(DateGenerator.class).annotatedWith(Names.named("Basic")).to(BasicDateGenerator.class);
+		bind(DateGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundDateGenerator.class);
 		
 		
 	}
