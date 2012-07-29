@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.factory;
+package com.nacnez.util.modelgen.impl.factory;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -49,6 +49,7 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 	DateGenerator lbdg;
 
 	public TypeToGeneratorMapping get() {
+		@SuppressWarnings("rawtypes")
 		Map<Class, Generator> typeToGeneratorMapping = new HashMap<Class, Generator>();
 		typeToGeneratorMapping.put(String.class, getStringGenerator());
 		typeToGeneratorMapping.put(Integer.class,getIntegerGenerator());

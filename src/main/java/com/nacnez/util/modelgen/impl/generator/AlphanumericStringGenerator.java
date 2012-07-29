@@ -1,8 +1,8 @@
 package com.nacnez.util.modelgen.impl.generator;
 
 import com.google.inject.Inject;
+import com.nacnez.util.modelgen.generator.rules.Alphanumeric;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;;
 
 public class AlphanumericStringGenerator extends StringGenerator implements Generator {
 	@Inject

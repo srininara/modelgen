@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 public class BasicIntegerGeneratorTest {
 
@@ -31,6 +31,7 @@ public class BasicIntegerGeneratorTest {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 		BasicIntegerGenerator big = injector.getInstance(BasicIntegerGenerator.class);
 		Generator anotherGen = mock(Generator.class);
+		@SuppressWarnings("unchecked")
 		List<Annotation> constraints = mock(List.class);
 		when(constraints.size()).thenReturn(1);
 		Integer anotherValue = 123;

@@ -1,8 +1,8 @@
 package com.nacnez.util.modelgen.exampleModels;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.contract.TargetModel;
-import com.nacnez.util.modelgen.impl.generator.rules.Limit;
+import com.nacnez.util.modelgen.TargetModel;
+import com.nacnez.util.modelgen.generator.rules.Limit;
 
 @TargetModel(modelClass=SimpleIntegerGenerationMockObject.class)
 public interface SimpleIntegerGenerationMockContract extends GenerationContract {

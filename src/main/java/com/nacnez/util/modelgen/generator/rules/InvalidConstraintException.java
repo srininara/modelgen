@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.rules;
+package com.nacnez.util.modelgen.generator.rules;
 
 public class InvalidConstraintException extends RuntimeException {
 

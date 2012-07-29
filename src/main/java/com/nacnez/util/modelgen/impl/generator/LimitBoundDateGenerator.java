@@ -1,14 +1,12 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-import java.math.BigDecimal;
-
 import org.joda.time.DateMidnight;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.google.inject.Inject;
+import com.nacnez.util.modelgen.generator.rules.DateLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.DateLimit;
 
 public class LimitBoundDateGenerator extends DateGenerator implements Generator {
 	

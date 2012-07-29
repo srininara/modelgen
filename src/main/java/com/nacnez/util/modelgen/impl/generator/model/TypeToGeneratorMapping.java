@@ -6,13 +6,14 @@ import com.nacnez.util.modelgen.impl.generator.Generator;
 
 public class TypeToGeneratorMapping {
 	
+	@SuppressWarnings("rawtypes")
 	Map<Class,Generator> mapping;
 	
-	public TypeToGeneratorMapping(Map<Class,Generator> mapping) {
+	public TypeToGeneratorMapping(@SuppressWarnings("rawtypes") Map<Class,Generator> mapping) {
 		this.mapping = mapping;
 	}
 	
-	public Generator get(Class type) {
+	public Generator get(@SuppressWarnings("rawtypes") Class type) {
 		return mapping.get(type);
 	}
 	

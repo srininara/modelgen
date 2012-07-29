@@ -3,9 +3,7 @@ package com.nacnez.util.modelgen.impl.generator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,17 +15,14 @@ import java.util.List;
 
 import net.vidageek.mirror.dsl.Mirror;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.Limit;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
-import com.nacnez.util.modelgen.impl.generator.rules.Limit;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class LimitBoundIntegerGeneratorTest {
 
@@ -50,7 +45,6 @@ public class LimitBoundIntegerGeneratorTest {
 		int lowLimit = ((Limit)constraints.get(0)).lowLimit();
 		int highLimit = ((Limit)constraints.get(0)).highLimit();
 		
-		Generator anotherGen = mock(Generator.class);
 		Integer intr = (Integer) lbig.generate(constraints);
 		verify(lbig).convert(constraints);
 		verify(constraintList).contains(Limit.class);

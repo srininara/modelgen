@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,10 +20,9 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.FromList;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.FromList;
 
 public class ListOfStringGeneratorTest {
 
@@ -38,7 +36,6 @@ public class ListOfStringGeneratorTest {
 		List<Annotation> constraints = getConstraints("setMockStringFromList");
 		assertEquals(1,constraints.size());
 		assertTrue(constraints.get(0).annotationType().equals(FromList.class));
-		Generator anotherGen = mock(Generator.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(sflg.convert(constraints)).thenReturn(constraintList);
 		when(constraintList.contains(FromList.class)).thenReturn(true);

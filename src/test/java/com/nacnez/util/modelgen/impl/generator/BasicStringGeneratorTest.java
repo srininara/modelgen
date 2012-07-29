@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 public class BasicStringGeneratorTest {
 
@@ -33,6 +33,7 @@ public class BasicStringGeneratorTest {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 		BasicStringGenerator bsg = injector.getInstance(BasicStringGenerator.class);
 		Generator anotherGen = mock(Generator.class);
+		@SuppressWarnings("unchecked")
 		List<Annotation> constraints = mock(List.class);
 		when(constraints.size()).thenReturn(1);
 		String anotherValue = "anotherValue";

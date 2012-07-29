@@ -23,11 +23,10 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.generator.rules.Size;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class AlphanumericSizedStringGeneratorTest {
 
@@ -56,8 +55,6 @@ public class AlphanumericSizedStringGeneratorTest {
 
 		doReturn(size).when(assg).getLength(constraintList);
 
-		
-		Generator anotherGen = mock(Generator.class);
 		String str = (String) assg.generate(constraints);
 		verify(assg).convert(constraints);
 		verify(constraintList).contains(Alphanumeric.class);

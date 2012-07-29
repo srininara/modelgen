@@ -21,9 +21,9 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.DecimalLimit;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.DecimalLimit;
 
 public class LimitBoundBigDecimalGeneratorTest {
 
@@ -47,7 +47,6 @@ public class LimitBoundBigDecimalGeneratorTest {
 		String highLimit = ((DecimalLimit)constraints.get(0)).highLimit();
 		int scale = ((DecimalLimit)constraints.get(0)).scale();
 		
-		Generator anotherGen = mock(Generator.class);
 		BigDecimal bigDoutput = (BigDecimal) lbig.generate(constraints);
 		verify(lbig).convert(constraints);
 		verify(constraintList).contains(DecimalLimit.class);

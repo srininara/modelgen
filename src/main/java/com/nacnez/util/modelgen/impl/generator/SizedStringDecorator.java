@@ -1,10 +1,7 @@
 package com.nacnez.util.modelgen.impl.generator;
 
-import java.lang.annotation.Annotation;
-import java.util.List;
-
+import com.nacnez.util.modelgen.generator.rules.Size;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class SizedStringDecorator extends StringGenerator implements Generator {
 

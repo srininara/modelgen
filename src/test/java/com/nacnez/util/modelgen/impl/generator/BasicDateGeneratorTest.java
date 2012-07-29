@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 public class BasicDateGeneratorTest {
 
@@ -27,6 +27,7 @@ public class BasicDateGeneratorTest {
 		assertNotNull(num);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void evenIfConstraintsAreSentBasicGeneratorWillAlwaysGenerateAValueIrrespectiveOfWhetherTheNextGeneratorIsPresent() {
 		Injector injector = Guice.createInjector(new ModelGenModule());

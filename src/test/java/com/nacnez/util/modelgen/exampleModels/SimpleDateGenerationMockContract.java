@@ -3,8 +3,8 @@ package com.nacnez.util.modelgen.exampleModels;
 import java.util.Date;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.contract.TargetModel;
-import com.nacnez.util.modelgen.impl.generator.rules.DateLimit;
+import com.nacnez.util.modelgen.TargetModel;
+import com.nacnez.util.modelgen.generator.rules.DateLimit;
 
 @TargetModel(modelClass=SimpleDateGenerationMockObject.class)
 public interface SimpleDateGenerationMockContract extends GenerationContract {

@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.factory;
+package com.nacnez.util.modelgen.impl.factory;
 
 import net.vidageek.mirror.dsl.Mirror;
 

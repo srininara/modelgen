@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 public class GeneratorITTest {
 	

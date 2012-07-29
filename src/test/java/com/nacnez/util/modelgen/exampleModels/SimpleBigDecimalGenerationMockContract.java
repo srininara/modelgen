@@ -3,8 +3,8 @@ package com.nacnez.util.modelgen.exampleModels;
 import java.math.BigDecimal;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.contract.TargetModel;
-import com.nacnez.util.modelgen.impl.generator.rules.DecimalLimit;
+import com.nacnez.util.modelgen.TargetModel;
+import com.nacnez.util.modelgen.generator.rules.DecimalLimit;
 
 @TargetModel(modelClass=SimpleBigDecimalGenerationMockObject.class)
 public interface SimpleBigDecimalGenerationMockContract extends GenerationContract {

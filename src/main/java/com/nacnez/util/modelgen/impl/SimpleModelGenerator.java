@@ -2,7 +2,6 @@ package com.nacnez.util.modelgen.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 
 import com.google.inject.Inject;
 import com.nacnez.util.modelgen.GenerationContract;
@@ -44,6 +43,13 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 
 	public Collection<T> andProvideAsCollection() {
 		Collection<T> outputCollection = new HashSet<T>();
+		generateModels(outputCollection);
+
+		return outputCollection;
+	}
+
+	@SuppressWarnings("unchecked")
+	private void generateModels(Collection<T> outputCollection) {
 		for (int i=0;i<this.numberOfModelObjs;i++) {
 			T model = null;
 			try {
@@ -58,23 +64,11 @@ public class SimpleModelGenerator<T> implements ModelGenerator<T> {
 				throw new RuntimeException("Problem occured", e);
 			}
 		}
-
-		// create a holder collection
-		// start a loop
-		// create a empty model using the prototype
-		// decipher the contract to figure out the setters
-		// lookout for annotations which tell you how to generate the data
-		// use the setters to set it into the empty model
-		// add the model to the collection
-		return outputCollection;
 	}
 	
 	public void andFillUpThis(Collection<T> c) {
-
+		generateModels(c);
 	}
 
-	public void andFillUpThis(Map<? extends Object, T> m) {
-
-	}
 
 }

@@ -1,9 +1,9 @@
 package com.nacnez.util.modelgen.exampleModels;
 
+import com.nacnez.util.modelgen.Contract;
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.contract.Contract;
-import com.nacnez.util.modelgen.impl.contract.TargetModel;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.TargetModel;
+import com.nacnez.util.modelgen.generator.rules.Alphanumeric;
 
 @TargetModel(modelClass=CompoundMockObject.class)
 public interface CompoundMockObjectContract  extends GenerationContract {

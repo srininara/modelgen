@@ -23,9 +23,9 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.SimpleDateGenerationMockContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.DateLimit;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.DateLimit;
 
 public class LimitBoundDateGeneratorTest {
 	Mirror mirror = new Mirror();
@@ -52,7 +52,6 @@ public class LimitBoundDateGeneratorTest {
 		Date lowLimit = formatter.parseDateTime(lowLimitS).toDateMidnight().toDate();
 		Date highLimit = formatter.parseDateTime(highLimitS).toDateMidnight().toDate();
 		
-		Generator anotherGen = mock(Generator.class);
 		Date dateOutput = (Date) lbdg.generate(constraints);
 		verify(lbdg).convert(constraints);
 		verify(constraintList).contains(DateLimit.class);

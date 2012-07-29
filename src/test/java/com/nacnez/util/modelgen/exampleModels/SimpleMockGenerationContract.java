@@ -1,11 +1,11 @@
 package com.nacnez.util.modelgen.exampleModels;
 
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.impl.contract.TargetModel;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
-import com.nacnez.util.modelgen.impl.generator.rules.FromList;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
+import com.nacnez.util.modelgen.TargetModel;
+import com.nacnez.util.modelgen.generator.rules.Alphabetic;
+import com.nacnez.util.modelgen.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.generator.rules.FromList;
+import com.nacnez.util.modelgen.generator.rules.Size;
 
 @TargetModel(modelClass=SimpleMockObject.class)
 public interface SimpleMockGenerationContract extends GenerationContract {

@@ -10,12 +10,11 @@ import java.util.Map;
 
 import net.vidageek.mirror.dsl.Mirror;
 
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 import com.google.inject.name.Named;
+import com.nacnez.util.modelgen.Contract;
 import com.nacnez.util.modelgen.GenerationContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.TargetModel;
 import com.nacnez.util.modelgen.impl.generator.Generator;
 import com.nacnez.util.modelgen.impl.generator.model.TypeToGeneratorMapping;
 
@@ -77,6 +76,7 @@ public class ContractDigestImpl implements ContractDigest {
 	}
 
 	private Object createModel() {
+		@SuppressWarnings("rawtypes")
 		Class modelClass = findTargetModel();
 		try {
 			return modelClass.newInstance();
@@ -85,6 +85,7 @@ public class ContractDigestImpl implements ContractDigest {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private Class findTargetModel() {
 		List<Annotation> annotations = mirror.on(contract).reflectAll()
 				.annotations().atClass();
@@ -133,6 +134,7 @@ public class ContractDigestImpl implements ContractDigest {
 		return this;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void digestInnerModel(Method method) {
 		List<Annotation> annotations = getConstraints(method);
 		if (annotations.size() > 0

@@ -3,8 +3,8 @@ package com.nacnez.util.modelgen.impl.generator;
 import java.math.BigDecimal;
 
 import com.google.inject.Inject;
+import com.nacnez.util.modelgen.generator.rules.DecimalLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.DecimalLimit;
 
 public class LimitBoundBigDecimalGenerator extends BigDecimalGenerator implements Generator {
 

@@ -1,12 +1,13 @@
-package com.nacnez.util.modelgen.impl.contract;
+package com.nacnez.util.modelgen;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD,ElementType.PARAMETER})
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Contract {
-	Class contractClass();
+public @interface TargetModel {
+	@SuppressWarnings("rawtypes")
+	Class modelClass();
 }

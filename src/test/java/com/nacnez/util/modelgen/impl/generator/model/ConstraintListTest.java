@@ -13,11 +13,11 @@ import net.vidageek.mirror.dsl.Mirror;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
+import com.nacnez.util.modelgen.generator.rules.Alphabetic;
+import com.nacnez.util.modelgen.generator.rules.Alphanumeric;
+import com.nacnez.util.modelgen.generator.rules.FromList;
+import com.nacnez.util.modelgen.generator.rules.Size;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphabetic;
-import com.nacnez.util.modelgen.impl.generator.rules.Alphanumeric;
-import com.nacnez.util.modelgen.impl.generator.rules.FromList;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class ConstraintListTest {
 

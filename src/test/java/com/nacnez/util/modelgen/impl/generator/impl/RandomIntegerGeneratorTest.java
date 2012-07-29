@@ -3,9 +3,7 @@ package com.nacnez.util.modelgen.impl.generator.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.annotation.Annotation;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.vidageek.mirror.dsl.Mirror;
@@ -79,14 +77,6 @@ public class RandomIntegerGeneratorTest {
 		}
 
 		assertEquals(genCount, generatedNumbers.size());
-	}
-	
-	
-
-
-	private List<Annotation> getConstraints(Class contract, String methodName) {
-		return mirror.on(contract).reflectAll().annotations()
-				.atMethod(methodName).withArgs(Integer.class);
 	}
 
 }

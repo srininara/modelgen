@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.rules;
+package com.nacnez.util.modelgen.generator.rules;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,7 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD,ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Alphabetic {
-
+public @interface Limit {
+	int lowLimit() default Integer.MIN_VALUE + 1;
+	int highLimit() default Integer.MAX_VALUE-1;
 }

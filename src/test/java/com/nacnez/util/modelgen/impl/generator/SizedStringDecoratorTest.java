@@ -23,9 +23,9 @@ import org.mockito.InOrder;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.nacnez.util.modelgen.exampleModels.PersonContract;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.generator.rules.Size;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.rules.Size;
 
 public class SizedStringDecoratorTest {
 
@@ -38,7 +38,6 @@ public class SizedStringDecoratorTest {
 		List<Annotation> constraints = getConstraints("setCreditCardNumber");
 		assertEquals(1,constraints.size());
 		assertTrue(constraints.get(0).annotationType().equals(Size.class));
-//		Generator anotherGen = mock(Generator.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(ssd.convert(constraints)).thenReturn(constraintList);
 		when(constraintList.contains(Size.class)).thenReturn(true);
@@ -77,6 +76,7 @@ public class SizedStringDecoratorTest {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void ifPassedConstraintIsNotSizeGeneratorWillJustPassItOnIfNextGeneratorIsPresent() {
 		SizedStringDecorator ssg = spy(new SizedStringDecorator(new BasicStringGenerator()));
@@ -98,6 +98,7 @@ public class SizedStringDecoratorTest {
 	@Test
 	public void ifPassedConstraintIsNotSizeAndNextGeneratorIsNotPresentGeneratorWillReturnNull() {
 		SizedStringDecorator ssg = spy(new SizedStringDecorator(new BasicStringGenerator()));
+		@SuppressWarnings("unchecked")
 		List<Annotation> constraints = mock(List.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(ssg.convert(constraints)).thenReturn(constraintList);
@@ -129,7 +130,6 @@ public class SizedStringDecoratorTest {
 		List<Annotation> constraints = getConstraints("setMockSizedStringParam");
 		assertEquals(1,constraints.size());
 		assertTrue(constraints.get(0).annotationType().equals(Size.class));
-		Generator anotherGen = mock(Generator.class);
 		ConstraintList constraintList = mock(ConstraintList.class);
 		when(ssg.convert(constraints)).thenReturn(constraintList);
 		when(constraintList.contains(Size.class)).thenReturn(true);

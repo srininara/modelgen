@@ -8,8 +8,6 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 
-import net.vidageek.mirror.dsl.Mirror;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -28,15 +26,13 @@ import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContrac
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
-import com.nacnez.util.modelgen.factory.ModelGenModule;
+import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 // This is an integration (and a classic style) test
 
 public class ContractDigestImplTest {
 
 	private ContractDigest cd;
-
-	private Mirror mirror = new Mirror();
 
 	@Before
 	public void setup() {
