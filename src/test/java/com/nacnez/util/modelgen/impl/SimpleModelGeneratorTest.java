@@ -10,12 +10,10 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.nacnez.util.modelgen.GeneratorFactory;
 import com.nacnez.util.modelgen.ModelGenerator;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockObject;
-import com.nacnez.util.modelgen.impl.factory.ModelGenModule;
 
 public class SimpleModelGeneratorTest {
 
@@ -24,10 +22,7 @@ public class SimpleModelGeneratorTest {
 	@Before
 	public void setup() {
 		// creating the SUT/CUT
-		Injector injector = Guice.createInjector(new ModelGenModule());
-
-		smg = new SimpleModelGenerator<SimpleMockObject>();
-		injector.injectMembers(smg);
+		smg = GeneratorFactory.get();
 	}
 
 	@Test
