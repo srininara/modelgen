@@ -1,10 +1,10 @@
-package com.nacnez.util.modelgen.impl.generator.impl;
+package com.nacnez.util.modelgen.impl.generator.random.impl;
 
 import static com.nacnez.util.modelgen.impl.generator.StringGenerator.DEFAULT_LENGTH;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import com.nacnez.util.modelgen.impl.generator.RandomStringGenerator;
+import com.nacnez.util.modelgen.impl.generator.random.RandomStringGenerator;
 
 // Support Ascii characters and their subsets
 

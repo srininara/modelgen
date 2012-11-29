@@ -22,6 +22,8 @@ import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockCont
 import com.nacnez.util.modelgen.exampleModels.SimpleBigDecimalGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleDateGenerationMockContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleDateGenerationMockObject;
+import com.nacnez.util.modelgen.exampleModels.SimpleDoubleGenerationMockContract;
+import com.nacnez.util.modelgen.exampleModels.SimpleDoubleGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockContract;
 import com.nacnez.util.modelgen.exampleModels.SimpleIntegerGenerationMockObject;
 import com.nacnez.util.modelgen.exampleModels.SimpleMockGenerationContract;
@@ -92,6 +94,13 @@ public class ContractDigestImplTest {
 	}
 	
 	@Test
+	public void digestingAndPopulatingASimpleClassWhichHasDoubleAttributesOnly() {
+		SimpleDoubleGenerationMockObject sdgmo = (SimpleDoubleGenerationMockObject) cd
+				.digest(SimpleDoubleGenerationMockContract.class).make();
+		assertSdgmo(sdgmo);
+	}
+
+	@Test
 	public void digestingAndPopulatingASimpleClassWhichHasDateAttributesOnly() {
 		SimpleDateGenerationMockObject sdgmo = (SimpleDateGenerationMockObject) cd.digest(SimpleDateGenerationMockContract.class).make();
 		assertSdgmo(sdgmo);
@@ -122,6 +131,21 @@ public class ContractDigestImplTest {
 		assertBDoutput(sbdgmo.getMockNegativeBigDecimal(),"-20000002.22","-1.12",2);
 		assertBDoutput(sbdgmo.getMockDiffScaleBigDecimal(),"10000.123","40000002.43",3);
 
+	}
+
+
+	private void assertSdgmo(SimpleDoubleGenerationMockObject sdgmo) {
+		assertDoutput(sdgmo.getMockBothLimitDouble(),"20000002.22","40000002.43");
+		assertDoutput(sdgmo.getMockNegativeDouble(),"-20000002.22","-1.12");
+
+	}
+
+	private void assertDoutput(Double doutput, String lowLimit,
+			String highLimit) {
+		assertNotNull(doutput);
+
+		assertTrue(doutput.compareTo(new Double(lowLimit)) >= 0);
+		assertTrue(doutput.compareTo(new Double(highLimit)) <= 0);
 	}
 
 	private void assertBDoutput(BigDecimal bigDoutput, String lowLimit,

@@ -2,14 +2,13 @@ package com.nacnez.util.modelgen.impl.generator;
 
 import com.google.inject.Inject;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
-import com.nacnez.util.modelgen.impl.generator.random.RandomDateGenerator;
+import com.nacnez.util.modelgen.impl.generator.random.RandomDoubleGenerator;
 
-public class BasicDateGenerator extends DateGenerator implements Generator {
-
-	@Inject
-	private RandomDateGenerator rdg;
-
+public class BasicDoubleGenerator extends DoubleGenerator implements Generator {
 	
+	@Inject
+	private RandomDoubleGenerator rdg;
+
 	@Override
 	protected Object doGenerate(ConstraintList constraintList) {
 		return rdg.generate();
@@ -19,6 +18,5 @@ public class BasicDateGenerator extends DateGenerator implements Generator {
 	protected boolean applicable(ConstraintList constraintList) {
 		return true;
 	}
-	
 
 }

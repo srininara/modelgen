@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.impl;
+package com.nacnez.util.modelgen.impl.generator.random.impl;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -6,8 +6,8 @@ import java.util.Date;
 import org.joda.time.DateMidnight;
 
 import com.google.inject.Inject;
-import com.nacnez.util.modelgen.impl.generator.RandomBigDecimalGenerator;
-import com.nacnez.util.modelgen.impl.generator.RandomDateGenerator;
+import com.nacnez.util.modelgen.impl.generator.random.RandomBigDecimalGenerator;
+import com.nacnez.util.modelgen.impl.generator.random.RandomDateGenerator;
 
 public class JodaBasedRandomDateGeneratorImpl implements RandomDateGenerator {
 

@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.impl;
+package com.nacnez.util.modelgen.impl.generator.random.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -11,6 +11,9 @@ import java.util.Set;
 import org.joda.time.DateMidnight;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.nacnez.util.modelgen.impl.generator.random.impl.JavaUtilRandomBigDecimalGeneratorImpl;
+import com.nacnez.util.modelgen.impl.generator.random.impl.JodaBasedRandomDateGeneratorImpl;
 
 public class RandomDateGeneratorTest {
 

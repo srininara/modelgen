@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.impl;
+package com.nacnez.util.modelgen.impl.generator.random.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.nacnez.util.modelgen.impl.generator.StringGenerator;
+import com.nacnez.util.modelgen.impl.generator.random.impl.ApacheCommonsRandomStringGeneratorImpl;
 
 public class RandomStringGeneratorTest {
 

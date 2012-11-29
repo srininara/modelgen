@@ -7,6 +7,7 @@ import org.joda.time.format.DateTimeFormatter;
 import com.google.inject.Inject;
 import com.nacnez.util.modelgen.generator.rules.DateLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
+import com.nacnez.util.modelgen.impl.generator.random.RandomDateGenerator;
 
 public class LimitBoundDateGenerator extends DateGenerator implements Generator {
 	

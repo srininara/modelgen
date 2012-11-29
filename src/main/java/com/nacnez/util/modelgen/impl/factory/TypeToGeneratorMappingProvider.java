@@ -10,6 +10,7 @@ import com.google.inject.Provider;
 import com.google.inject.name.Named;
 import com.nacnez.util.modelgen.impl.generator.BigDecimalGenerator;
 import com.nacnez.util.modelgen.impl.generator.DateGenerator;
+import com.nacnez.util.modelgen.impl.generator.DoubleGenerator;
 import com.nacnez.util.modelgen.impl.generator.Generator;
 import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.SizedStringDecorator;
@@ -43,6 +44,12 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 	BigDecimalGenerator lbbdg;
 	
 	@Inject @Named("Basic")
+	DoubleGenerator bdog;
+	
+	@Inject @Named("Limited")
+	DoubleGenerator lbdog;
+	
+	@Inject @Named("Basic")
 	DateGenerator bdg;
 	
 	@Inject @Named("Limited")
@@ -54,6 +61,7 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 		typeToGeneratorMapping.put(String.class, getStringGenerator());
 		typeToGeneratorMapping.put(Integer.class,getIntegerGenerator());
 		typeToGeneratorMapping.put(BigDecimal.class,getBigDecimalGenerator());
+		typeToGeneratorMapping.put(Double.class,getDoubleGenerator());
 		typeToGeneratorMapping.put(Date.class,getDateGenerator());
 		return new TypeToGeneratorMapping(typeToGeneratorMapping);
 	}
@@ -70,6 +78,10 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 		return (Generator)lbbdg;
 	}
 
+	private Generator getDoubleGenerator() {
+		lbdog.setNext((Generator)bdog);
+		return (Generator)lbdog;
+	}
 
 	private Generator getIntegerGenerator() {
 		lbig.setNext((Generator)big);

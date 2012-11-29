@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator.impl;
+package com.nacnez.util.modelgen.impl.generator.random.impl;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,8 @@ import net.vidageek.mirror.dsl.Mirror;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.nacnez.util.modelgen.impl.generator.random.impl.JavaUtilRandomBigDecimalGeneratorImpl;
 
 public class RandomBigDecimalGeneratorTest {
 

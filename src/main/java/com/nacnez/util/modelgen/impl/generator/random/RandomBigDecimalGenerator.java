@@ -1,4 +1,4 @@
-package com.nacnez.util.modelgen.impl.generator;
+package com.nacnez.util.modelgen.impl.generator.random;
 
 import java.math.BigDecimal;
 
