@@ -5,7 +5,7 @@ import com.nacnez.util.modelgen.generator.rules.DoubleLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.random.RandomDoubleGenerator;
 
-public class LimitBoundDoubleGenerator extends DoubleGenerator implements Generator {
+public class LimitBoundDoubleGenerator extends BaseGenerator implements Generator {
 
 	@Inject
 	private RandomDoubleGenerator rdg;

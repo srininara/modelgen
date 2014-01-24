@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.random.RandomIntegerGenerator;
 
-public class BasicIntegerGenerator extends IntegerGenerator implements Generator {
+public class BasicIntegerGenerator extends BaseGenerator implements Generator {
 
 	@Inject
 	private RandomIntegerGenerator rig;

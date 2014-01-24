@@ -36,8 +36,7 @@ public class AlphanumericSizedStringGeneratorTest {
 	public void testHappyCase() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 
-		AlphanumericStringGenerator asg = spy(injector.getInstance(AlphanumericStringGenerator.class));
-		StringGenerator assg = spy(new SizedStringDecorator(asg));
+		AlphanumericStringGenerator assg = spy(injector.getInstance(AlphanumericStringGenerator.class));
 		List<Annotation> constraints = getConstraints("setPAN");
 		assertEquals(2,constraints.size());
 		Class<? extends Annotation> constraint1 = constraints.get(0).annotationType();
@@ -59,7 +58,7 @@ public class AlphanumericSizedStringGeneratorTest {
 		verify(assg).convert(constraints);
 		verify(constraintList).contains(Alphanumeric.class);
 		verify(constraintList,never()).get(Alphanumeric.class);
-		verify(constraintList).contains(Size.class);
+//		verify(constraintList).contains(Size.class);
 		assertNotNull(str);
 		assertTrue(StringUtils.isAlphanumeric(str));
 		assertEquals(size,str.length());

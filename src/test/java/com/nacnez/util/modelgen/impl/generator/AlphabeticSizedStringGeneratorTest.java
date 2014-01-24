@@ -3,7 +3,6 @@ package com.nacnez.util.modelgen.impl.generator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -36,8 +35,7 @@ public class AlphabeticSizedStringGeneratorTest {
 	public void testHappyCase() {
 		Injector injector = Guice.createInjector(new ModelGenModule());
 
-		AlphabeticStringGenerator asg = spy(injector.getInstance(AlphabeticStringGenerator.class));
-		StringGenerator assg = spy(new SizedStringDecorator(asg));
+		AlphabeticStringGenerator assg = spy(injector.getInstance(AlphabeticStringGenerator.class));
 		List<Annotation> constraints = getConstraints("setFirstName");
 		assertEquals(2,constraints.size());
 		Class<? extends Annotation> constraint1 = constraints.get(0).annotationType();
@@ -52,8 +50,6 @@ public class AlphabeticSizedStringGeneratorTest {
 		when(constraintList.get(Size.class)).thenReturn((constraint1.equals(Size.class))?constraints.get(0):constraints.get(1));
 		
 		int size = ((constraint1.equals(Size.class))?((Size)constraints.get(0)).maxSize():((Size)constraints.get(1)).maxSize());
-
-		doReturn(size).when(assg).getLength(constraintList);
 
 		String str = (String) assg.generate(constraints);
 		verify(assg).convert(constraints);

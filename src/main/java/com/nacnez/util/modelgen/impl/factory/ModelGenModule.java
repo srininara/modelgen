@@ -16,16 +16,12 @@ import com.nacnez.util.modelgen.impl.generator.BasicDateGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicDoubleGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.BasicStringGenerator;
-import com.nacnez.util.modelgen.impl.generator.BigDecimalGenerator;
-import com.nacnez.util.modelgen.impl.generator.DateGenerator;
-import com.nacnez.util.modelgen.impl.generator.DoubleGenerator;
-import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
+import com.nacnez.util.modelgen.impl.generator.Generator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundBigDecimalGenerator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundDateGenerator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundDoubleGenerator;
 import com.nacnez.util.modelgen.impl.generator.LimitBoundIntegerGenerator;
 import com.nacnez.util.modelgen.impl.generator.StringFromListGenerator;
-import com.nacnez.util.modelgen.impl.generator.StringGenerator;
 import com.nacnez.util.modelgen.impl.generator.model.TypeToGeneratorMapping;
 import com.nacnez.util.modelgen.impl.generator.random.RandomBigDecimalGenerator;
 import com.nacnez.util.modelgen.impl.generator.random.RandomDateGenerator;
@@ -44,20 +40,19 @@ public class ModelGenModule extends AbstractModule {
 	protected void configure() {
 		bind(RandomStringGenerator.class).to(
 				ApacheCommonsRandomStringGeneratorImpl.class);
-		bind(StringGenerator.class).annotatedWith(Names.named("Basic")).to(
-				BasicStringGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("BasicString")).to(BasicStringGenerator.class);
 		
 		bind(RandomIntegerGenerator.class).to(
 				JavaUtilRandomIntegerGeneratorImpl.class);
-		bind(StringGenerator.class).annotatedWith(Names.named("Alphabetic"))
+		bind(Generator.class).annotatedWith(Names.named("Alphabetic"))
 				.to(AlphabeticStringGenerator.class);
-		bind(StringGenerator.class).annotatedWith(Names.named("Alphanumeric"))
+		bind(Generator.class).annotatedWith(Names.named("Alphanumeric"))
 		.to(AlphanumericStringGenerator.class);
-		bind(StringGenerator.class).annotatedWith(Names.named("StringFromList"))
+		bind(Generator.class).annotatedWith(Names.named("StringFromList"))
 		.to(StringFromListGenerator.class);
 		
-		bind(IntegerGenerator.class).annotatedWith(Names.named("Basic")).to(BasicIntegerGenerator.class);
-		bind(IntegerGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundIntegerGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("BasicInteger")).to(BasicIntegerGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("LimitedInteger")).to(LimitBoundIntegerGenerator.class);
 
 		bind(TypeToGeneratorMapping.class).annotatedWith(Names.named("typeGenMap")).toProvider(TypeToGeneratorMappingProvider.class);
 		bind(Mirror.class).in(Singleton.class);
@@ -66,20 +61,20 @@ public class ModelGenModule extends AbstractModule {
 
 		bind(RandomBigDecimalGenerator.class).to(
 				JavaUtilRandomBigDecimalGeneratorImpl.class);
-		bind(BigDecimalGenerator.class).annotatedWith(Names.named("Basic")).to(BasicBigDecimalGenerator.class);
-		bind(BigDecimalGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundBigDecimalGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("BasicBigDecimal")).to(BasicBigDecimalGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("LimitedBigDecimal")).to(LimitBoundBigDecimalGenerator.class);
 		
 		bind(RandomDoubleGenerator.class).to(
 				JavaUtilRandomDoubleGeneratorImpl.class);
-		bind(DoubleGenerator.class).annotatedWith(Names.named("Basic")).to(BasicDoubleGenerator.class);
-		bind(DoubleGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundDoubleGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("BasicDouble")).to(BasicDoubleGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("LimitedDouble")).to(LimitBoundDoubleGenerator.class);
 
 		
 		
 		bind(RandomDateGenerator.class).to(
 				JodaBasedRandomDateGeneratorImpl.class);
-		bind(DateGenerator.class).annotatedWith(Names.named("Basic")).to(BasicDateGenerator.class);
-		bind(DateGenerator.class).annotatedWith(Names.named("Limited")).to(LimitBoundDateGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("BasicDate")).to(BasicDateGenerator.class);
+		bind(Generator.class).annotatedWith(Names.named("LimitedDate")).to(LimitBoundDateGenerator.class);
 		
 		
 	}

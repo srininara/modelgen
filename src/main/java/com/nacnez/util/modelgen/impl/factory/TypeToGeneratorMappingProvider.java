@@ -8,52 +8,46 @@ import java.util.Map;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
-import com.nacnez.util.modelgen.impl.generator.BigDecimalGenerator;
-import com.nacnez.util.modelgen.impl.generator.DateGenerator;
-import com.nacnez.util.modelgen.impl.generator.DoubleGenerator;
 import com.nacnez.util.modelgen.impl.generator.Generator;
-import com.nacnez.util.modelgen.impl.generator.IntegerGenerator;
-import com.nacnez.util.modelgen.impl.generator.SizedStringDecorator;
-import com.nacnez.util.modelgen.impl.generator.StringGenerator;
 import com.nacnez.util.modelgen.impl.generator.model.TypeToGeneratorMapping;
 
 public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorMapping> {
 	
-	@Inject @Named("Basic")
-	StringGenerator bsg; 
+	@Inject @Named("BasicString")
+	Generator bsg; 
 
 	@Inject @Named("Alphabetic")
-	StringGenerator asg; 
+	Generator asg; 
 	
 	@Inject @Named("Alphanumeric")
-	StringGenerator ansg;
+	Generator ansg;
 
 	@Inject @Named("StringFromList")
-	StringGenerator sflg;
+	Generator sflg;
 	
-	@Inject @Named("Basic")
-	IntegerGenerator big;
+	@Inject @Named("BasicInteger")
+	Generator big;
 	
-	@Inject @Named("Limited")
-	IntegerGenerator lbig;
+	@Inject @Named("LimitedInteger")
+	Generator lbig;
 	
-	@Inject @Named("Basic")
-	BigDecimalGenerator bbdg;
+	@Inject @Named("BasicBigDecimal")
+	Generator bbdg;
 	
-	@Inject @Named("Limited")
-	BigDecimalGenerator lbbdg;
+	@Inject @Named("LimitedBigDecimal")
+	Generator lbbdg;
 	
-	@Inject @Named("Basic")
-	DoubleGenerator bdog;
+	@Inject @Named("BasicDouble")
+	Generator bdog;
 	
-	@Inject @Named("Limited")
-	DoubleGenerator lbdog;
+	@Inject @Named("LimitedDouble")
+	Generator lbdog;
 	
-	@Inject @Named("Basic")
-	DateGenerator bdg;
+	@Inject @Named("BasicDate")
+	Generator bdg;
 	
-	@Inject @Named("Limited")
-	DateGenerator lbdg;
+	@Inject @Named("LimitedDate")
+	Generator lbdg;
 
 	public TypeToGeneratorMapping get() {
 		@SuppressWarnings("rawtypes")
@@ -90,20 +84,20 @@ public class TypeToGeneratorMappingProvider implements Provider<TypeToGeneratorM
 
 
 	private Generator getStringGenerator() {
-		Generator sizedNormalStringGenerator = new SizedStringDecorator(bsg); 
-		sizedNormalStringGenerator.setNext((Generator)bsg);
+//		Generator sizedNormalStringGenerator = new SizedStringDecorator(bsg); 
+//		sizedNormalStringGenerator.setNext((Generator)bsg);
 		
-		asg.setNext(sizedNormalStringGenerator);
+		asg.setNext(bsg);//sizedNormalStringGenerator);
 		
-		Generator sizedAlphabeticStringGenerator = new SizedStringDecorator(asg); 
-		sizedAlphabeticStringGenerator.setNext((Generator)asg);
+//		Generator sizedAlphabeticStringGenerator = new SizedStringDecorator(asg); 
+//		sizedAlphabeticStringGenerator.setNext((Generator)asg);
 
-		ansg.setNext(sizedAlphabeticStringGenerator);
+		ansg.setNext(asg);//sizedAlphabeticStringGenerator);
 		
-		Generator sizedAlphanumericStringGenerator = new SizedStringDecorator(ansg); 
-		sizedAlphanumericStringGenerator.setNext((Generator)ansg);
+//		Generator sizedAlphanumericStringGenerator = new SizedStringDecorator(ansg); 
+//		sizedAlphanumericStringGenerator.setNext((Generator)ansg);
 		
-		sflg.setNext(sizedAlphanumericStringGenerator);
+		sflg.setNext(ansg);//sizedAlphanumericStringGenerator);
 		
 		return (Generator)sflg;
 	}

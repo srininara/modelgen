@@ -9,7 +9,7 @@ import com.nacnez.util.modelgen.generator.rules.DateLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.random.RandomDateGenerator;
 
-public class LimitBoundDateGenerator extends DateGenerator implements Generator {
+public class LimitBoundDateGenerator extends BaseGenerator implements Generator {
 	
 	@Inject
 	RandomDateGenerator rdg;

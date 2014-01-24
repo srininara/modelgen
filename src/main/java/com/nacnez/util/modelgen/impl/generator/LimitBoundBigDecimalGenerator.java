@@ -7,7 +7,7 @@ import com.nacnez.util.modelgen.generator.rules.DecimalLimit;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.random.RandomBigDecimalGenerator;
 
-public class LimitBoundBigDecimalGenerator extends BigDecimalGenerator implements Generator {
+public class LimitBoundBigDecimalGenerator extends BaseGenerator implements Generator {
 
 	@Inject
 	private RandomBigDecimalGenerator rbdg;

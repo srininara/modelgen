@@ -13,7 +13,7 @@ public abstract class StringGenerator extends BaseGenerator {
 		super();
 	}
 	
-	public final Object generate(List<Annotation> constraints) {
+	public final Object doGenerate(List<Annotation> constraints) {
 		ConstraintList list = convert(constraints);
 		if (applicable(list)) {
 			return doGenerate(list,getLength(list));

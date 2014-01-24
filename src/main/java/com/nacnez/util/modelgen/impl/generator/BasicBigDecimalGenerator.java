@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import com.nacnez.util.modelgen.impl.generator.model.ConstraintList;
 import com.nacnez.util.modelgen.impl.generator.random.RandomBigDecimalGenerator;
 
-public class BasicBigDecimalGenerator extends BigDecimalGenerator implements Generator {
+public class BasicBigDecimalGenerator extends BaseGenerator implements Generator {
 	
 	@Inject
 	private RandomBigDecimalGenerator rbdg;
